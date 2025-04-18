@@ -7,10 +7,10 @@ Cari jurnal masing-masing:
 - 1 jurnal internasional
 
 Jurnal yang dicari:
-- pengararuh x1 terhadap y
-- pengararuh x2 terhadap y
-- pengararuh x3 terhadap y
-- pengararuh x1 terhadap z
-- pengararuh x2 terhadap z
-- pengararuh x3 terhadap z
-- pengararuh xz terhadap y
+- pengararuh Pengaruh Pelatihan terhadap Produktivitas Karyawan (OK)
+- pengararuh Work-Life Balance terhadap Produktivitas Karyawan (OK)
+- pengararuh Beban Kerja terhadap Produktivitas Karyawan
+- pengararuh Pengaruh Pelatihan terhadap Digitalisasi (OK)
+- pengararuh Work-Life Balance terhadap Digitalisasi (OK)
+- pengararuh Beban Kerja terhadap Digitalisasi
+- pengararuh Digitalisasi terhadap Produktivitas Karyawan
