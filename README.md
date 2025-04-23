@@ -16,6 +16,12 @@ Jurnal yang dicari:
 - Pengararuh Digitalisasi terhadap Produktivitas Karyawan (OK)
 
 
+# Step 2
+Buat BAB 1, kalo bisa lebih. Kirim ke email Pak Agus.
+```
+aguskelik69@gmail.com
+```
+
 # BAB 1:
 ## Latar Belakang
 Fenomena Y (Produktivitas Karyawan) disebutkan dulu, mulai dari internasional dengan sumber, lalu menurun ke fenomena di Indonesia.
@@ -63,3 +69,6 @@ Variabel yang dimasukkan ke dalam judul.
 # BAB 2
 
 ## Grand Theory
+Pengertian masing-masing variabel, cari 5 buku untuk definisinya
+
+## Rangkuman Jurnal
