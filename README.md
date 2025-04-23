@@ -38,15 +38,28 @@ Variabel yang dimasukkan ke dalam judul.
 - Apakah x1 berpengaruh terhadap y?
 - Apakah x2 berpengaruh terhadap y?
 - Apakah x3 berpengaruh terhadap y?
+- Apakah z berpengaruh terhadap y?
 - Apakah x1 berpengaruh terhadap z?
 - Apakah x2 berpengaruh terhadap z?
 - Apakah x3 berpengaruh terhadap z?
-- Apakah z berpengaruh terhadap y?
 
 - Apakah Pelatihan berpengaruh terhadap Produktivitas Karyawan?
 - Apakah Work-Life berpengaruh terhadap Produktivitas Karyawan?
 - Apakah Beban Kerja berpengaruh terhadap Produktivitas Karyawan?
+- Apakah Digitalisasi berpengaruh terhadap Produktivitas Karyawan?
 - Apakah Pelatihan berpengaruh terhadap Digitalisasi?
 - Apakah Work-Life berpengaruh terhadap Digitalisasi?
 - Apakah Beban Kerja berpengaruh terhadap Digitalisasi?
-- Apakah Digitalisasi berpengaruh terhadap Produktivitas Karyawan?
+
+## Tujuan Penelitian
+- Untuk menguji pengaruh x1 terhadap y?
+- Untuk menguji pengaruh x2 terhadap y?
+- Untuk menguji pengaruh x3 terhadap y?
+- Untuk menguji pengaruh z terhadap y?
+- Untuk menguji pengaruh x1 terhadap z?
+- Untuk menguji pengaruh x2 terhadap z?
+- Untuk menguji pengaruh x3 terhadap z?
+
+# BAB 2
+
+## Grand Theory
