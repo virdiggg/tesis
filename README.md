@@ -9,8 +9,8 @@ Cari jurnal masing-masing:
 Jurnal yang dicari:
 - pengararuh Pengaruh Pelatihan terhadap Produktivitas Karyawan (OK)
 - pengararuh Work-Life Balance terhadap Produktivitas Karyawan (OK)
-- pengararuh Beban Kerja terhadap Produktivitas Karyawan
+- pengararuh Beban Kerja terhadap Produktivitas Karyawan (OK)
 - pengararuh Pengaruh Pelatihan terhadap Digitalisasi (OK)
 - pengararuh Work-Life Balance terhadap Digitalisasi (OK)
-- pengararuh Beban Kerja terhadap Digitalisasi
-- pengararuh Digitalisasi terhadap Produktivitas Karyawan
+- pengararuh Beban Kerja terhadap Digitalisasi (OK)
+- pengararuh Digitalisasi terhadap Produktivitas Karyawan (OK)
