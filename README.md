@@ -1,6 +1,6 @@
 # Judul: Pengaruh Pelatihan, Work-Life Balance, dan Beban Kerja terhadap Produktivitas Karyawan dengan Digitalisasi sebagai Variabel Moderasi
 
-# Step 1
+# Update 26 Maret 2025
 
 Cari jurnal masing-masing:
 - 4 jurnal nasional
@@ -16,7 +16,7 @@ Jurnal yang dicari:
 - Pengararuh Digitalisasi terhadap Produktivitas Karyawan (OK)
 
 
-# Step 2
+# Update 23 April 2025
 Buat BAB 1, kalo bisa lebih. Kirim ke email Pak Agus.
 ```
 aguskelik69@gmail.com
@@ -25,10 +25,6 @@ aguskelik69@gmail.com
 # BAB 1:
 ## Latar Belakang
 Fenomena Y (Produktivitas Karyawan) disebutkan dulu, mulai dari internasional dengan sumber, lalu menurun ke fenomena di Indonesia.
-
-- Fenomena lain:
-    - Work-Life Balance yang terganggu akibat adanya digitalisasi: Ditelepon di luar jam kerja, ditagih report di luar jam kerja.
-    - Beban Kerja yang berubah (bisa lebih tinggi bisa lebih rendah) karena adanya digitalisasi.
 
 Riset-riset sebelumnya.
 
