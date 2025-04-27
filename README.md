@@ -37,30 +37,22 @@ Apa yang memengaruhi produktivitas.
 Variabel yang dimasukkan ke dalam judul.
 
 ## Perumusan Masalah
-- Apakah x1 berpengaruh terhadap y?
-- Apakah x2 berpengaruh terhadap y?
-- Apakah x3 berpengaruh terhadap y?
-- Apakah z berpengaruh terhadap y?
-- Apakah x1 berpengaruh terhadap z?
-- Apakah x2 berpengaruh terhadap z?
-- Apakah x3 berpengaruh terhadap z?
-
-- Apakah Pelatihan berpengaruh terhadap Produktivitas Karyawan?
-- Apakah Work-Life berpengaruh terhadap Produktivitas Karyawan?
-- Apakah Beban Kerja berpengaruh terhadap Produktivitas Karyawan?
-- Apakah Digitalisasi berpengaruh terhadap Produktivitas Karyawan?
-- Apakah Pelatihan berpengaruh terhadap Digitalisasi?
-- Apakah Work-Life berpengaruh terhadap Digitalisasi?
-- Apakah Beban Kerja berpengaruh terhadap Digitalisasi?
+- Apakah Pelatihan (X1) berpengaruh terhadap Produktivitas Karyawan (Y)?
+- Apakah Work-Life Balance (X2) berpengaruh terhadap Produktivitas Karyawan (Y)?
+- Apakah Beban Kerja (X3) berpengaruh terhadap Produktivitas Karyawan (Y)?
+- Apakah Digitalisasi (Z) berpengaruh terhadap Produktivitas Karyawan (Y)?
+- Apakah Pelatihan (X1) berpengaruh terhadap Digitalisasi (Z)?
+- Apakah Work-Life Balance (X2) berpengaruh terhadap Digitalisasi (Z)?
+- Apakah Beban Kerja (X3) berpengaruh terhadap Digitalisasi (Z)?
 
 ## Tujuan Penelitian
-- Untuk menguji pengaruh x1 terhadap y?
-- Untuk menguji pengaruh x2 terhadap y?
-- Untuk menguji pengaruh x3 terhadap y?
-- Untuk menguji pengaruh z terhadap y?
-- Untuk menguji pengaruh x1 terhadap z?
-- Untuk menguji pengaruh x2 terhadap z?
-- Untuk menguji pengaruh x3 terhadap z?
+- Untuk menguji pengaruh Pelatihan (X1) terhadap Produktivitas Karyawan (Y)
+- Untuk menguji pengaruh Work-Life Balance (X2) terhadap Produktivitas Karyawan (Y)
+- Untuk menguji pengaruh Beban Kerja (X3) terhadap Produktivitas Karyawan (Y)
+- Untuk menguji pengaruh Digitalisasi (Z) terhadap Produktivitas Karyawan (Y)
+- Untuk menguji pengaruh Pelatihan (X1) terhadap Digitalisasi (Z)
+- Untuk menguji pengaruh Work-Life Balance (X2) terhadap Digitalisasi (Z)
+- Untuk menguji pengaruh Beban Kerja (X3) terhadap Digitalisasi (Z)
 
 # BAB 2
 
