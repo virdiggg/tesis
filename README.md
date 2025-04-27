@@ -59,4 +59,10 @@ Variabel yang dimasukkan ke dalam judul.
 ## Grand Theory
 Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 
+- Pelatihan (OK)
+- Work-Life Balance (OK)
+- Beban Kerja (OK)
+- Digitalisasi (OK)
+- Produktivitas Karyawan
+
 ## Rangkuman Jurnal
