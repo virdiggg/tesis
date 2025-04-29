@@ -71,5 +71,5 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 - Work-Life Balance > Digitalisasi (OK)
 - Work-Life Balance > Produktivitas (OK)
 - Beban Kerja > Digitalisasi (OK)
-- Beban Kerja > Produktivitas
-- Digitalisasi > Produktivitas
+- Beban Kerja > Produktivitas (OK)
+- Digitalisasi > Produktivitas (OK)
