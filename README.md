@@ -63,6 +63,13 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 - Work-Life Balance (OK)
 - Beban Kerja (OK)
 - Digitalisasi (OK)
-- Produktivitas Karyawan
+- Produktivitas Karyawan (OK)
 
-## Rangkuman Jurnal
+## Rangkuman Jurnal Masing-masing 3 Jurnal
+- Pelatihan > Digitalisasi (OK)
+- Pelatihan > Produktivitas (OK)
+- Work-Life Balance > Digitalisasi (OK)
+- Work-Life Balance > Produktivitas (OK)
+- Beban Kerja > Digitalisasi (OK)
+- Beban Kerja > Produktivitas
+- Digitalisasi > Produktivitas
