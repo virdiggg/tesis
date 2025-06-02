@@ -73,3 +73,12 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 - Beban Kerja > Digitalisasi (OK)
 - Beban Kerja > Produktivitas (OK)
 - Digitalisasi > Produktivitas (OK)
+
+
+1.	H1 : Terdapat pengaruh Kompensasi terhadap Kinerja Karyawan Wanita di Kota Tangerang.
+2.	H2 : Terdapat pengaruh Komunikasi terhadap Kinerja Karyawan Wanita di Kota Tangerang.
+3.	H3 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang.
+4.	H4 : Terdapat pengaruh Kepuasan Kerja terhadap Kinerja Karyawan Wanita di Kota Tangerang.
+5.	H5 : Terdapat pengaruh Kompensasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
+6.	H6 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
+7.	H7 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang Kepuasan Kerja sebagai pemoderasi.
