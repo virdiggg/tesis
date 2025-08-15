@@ -1,5 +1,10 @@
 # Judul: Pengaruh Pelatihan, Work-Life Balance, dan Beban Kerja terhadap Produktivitas Karyawan dengan Digitalisasi sebagai Variabel Moderasi
 
+# Dosen
+```
+Dr. Agustinus Priyowidodo, S.Pd., M.M.
+```
+
 # Update 26 Maret 2025
 
 Cari jurnal masing-masing:
