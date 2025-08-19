@@ -93,3 +93,6 @@ Temp:
 ```
 https://data.tangerangselatankota.go.id/dataset/tingkat-produktivitas-tenaga-kerja-di-tangerang-selatan/resource/1bb4391a-2ed3-4f72-a492-428d141ec01e
 ```
+```
+https://opendata.jabarprov.go.id/id/dataset/indeks-daya-saing-digital-berdasarkan-provinsi-di-indonesia
+```
