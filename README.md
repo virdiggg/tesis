@@ -87,3 +87,9 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 5.	H5 : Terdapat pengaruh Kompensasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
 6.	H6 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
 7.	H7 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang Kepuasan Kerja sebagai pemoderasi.
+
+
+Temp:
+```
+https://data.tangerangselatankota.go.id/dataset/tingkat-produktivitas-tenaga-kerja-di-tangerang-selatan/resource/1bb4391a-2ed3-4f72-a492-428d141ec01e
+```
