@@ -96,3 +96,6 @@ https://data.tangerangselatankota.go.id/dataset/tingkat-produktivitas-tenaga-ker
 ```
 https://opendata.jabarprov.go.id/id/dataset/indeks-daya-saing-digital-berdasarkan-provinsi-di-indonesia
 ```
+
+
+Alasan pemilihan Tangerang Raya
