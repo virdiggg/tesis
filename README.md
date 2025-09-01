@@ -102,3 +102,18 @@ https://brin.go.id/drid/page/indeks-daya-saing-daerah
 
 
 Alasan pemilihan Tangerang Raya
+
+
+Perusahaan Kosmetik
+```
+https://standar-otskk.pom.go.id/otskk-db/kategori/daftar-industri-pemilik-sertifikat-cpkb
+```
+UMKM Kosmetik
+```
+https://satudata.pom.go.id/datasets/123-data-usaha-mikro-kecil-dan-menengah-(umkm)-kosmetik?tabs=tabs2
+```
+
+Index Daya Saing Digital
+```
+https://opendata.jabarprov.go.id/id/dataset/indeks-daya-saing-digital-berdasarkan-provinsi-di-indonesia
+```
