@@ -117,3 +117,10 @@ Index Daya Saing Digital
 ```
 https://opendata.jabarprov.go.id/id/dataset/indeks-daya-saing-digital-berdasarkan-provinsi-di-indonesia
 ```
+
+Rafli, Mochamad. 2024. Daya Saing SDM Indonesia Terbaik Ketiga di ASEAN. https://data.goodstats.id/statistic/daya-saing-sdm-indonesia-terbaik-ketiga-di-asean-xzeuP. Diakses pada tanggal 02 Juni 2025
+IMD. 2024. Talent Ranking Indonesia 2024. https://www.imd.org/country-profile/talent-indonesia-2024/. Diakses pada tanggal 02 Juni 2025
+OTSKK. 2025. Daftar Industri Kosmetik yang Memiliki Sertifikat CPKB. https://standar-otskk.pom.go.id/otskk-db/kategori/daftar-industri-pemilik-sertifikat-cpkb. Diakses pada tanggal 01 September 2025
+BPOM. 2023. Data Usaha Mikro Kecil dan Menengah (UMKM) Kosmetik. https://satudata.pom.go.id/datasets/123-data-usaha-mikro-kecil-dan-menengah-(umkm)-kosmetik?tabs=tabs2. Diakses pada tanggal 01 September 2025
+Instansi Vertikal dan Kementerian. 2024. Indeks Daya Saing Digital Berdasarkan Provinsi di Indonesia. https://opendata.jabarprov.go.id/id/dataset/indeks-daya-saing-digital-berdasarkan-provinsi-di-indonesia. Diakses pada tanggal 01 September 2025
+Ahdiat, Adi. 2024. Produktivitas Tenaga Kerja RI Urutan ke-5 di Asia Tenggara. https://databoks.katadata.co.id/infografik/2024/09/24/produktivitas-tenaga-kerja-ri-urutan-ke-5-di-asia-tenggara/. Diakses pada tanggal 02 Juni 2025
