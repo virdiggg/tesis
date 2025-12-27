@@ -10,9 +10,9 @@ skor_maksimal_per_orang = 5
 skor_ideal = total_responden * skor_maksimal_per_orang # 1875
 
 variabel_config = {
-    'Beban_Kerja': {'cols': [f'BK{i}' for i in range(1, 7)], 'code': 'X1'},
+    'Pelatihan': {'cols': [f'P{i}' for i in range(1, 11)], 'code': 'X1'},
     'Work_Life_Balance': {'cols': [f'WB{i}' for i in range(1, 7)], 'code': 'X2'},
-    'Pelatihan': {'cols': [f'P{i}' for i in range(1, 11)], 'code': 'X3'},
+    'Beban_Kerja': {'cols': [f'BK{i}' for i in range(1, 7)], 'code': 'X3'},
     'Digitalisasi': {'cols': [f'D{i}' for i in range(1, 12)], 'code': 'Z'},
     'Produktivitas': {'cols': [f'PK{i}' for i in range(1, 9)], 'code': 'Y'}
 }
