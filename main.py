@@ -17,6 +17,8 @@ variabel_config = {
     'Produktivitas': {'cols': [f'PK{i}' for i in range(1, 9)], 'code': 'Y'}
 }
 
+profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja']
+
 DB_CONFIG = {
     "host": "localhost",
     "database": "testing",
@@ -119,8 +121,6 @@ df_final = pd.concat([df_profil.reset_index(drop=True), df_csv_shuffled.reset_in
 
 df_final.to_excel(os.path.join('target', 'Hasil_Profil_Responden.xlsx'), index=False)
 df_csv_shuffled.to_csv(os.path.join('target', 'pernyataan.csv'), index=False)
-
-profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja']
 
 for col in profile_cols:
     plt.figure(figsize=(8, 6))
