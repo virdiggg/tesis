@@ -38,8 +38,10 @@ else:
         plt.title(f'Distribusi Responden Berdasarkan {col.title()}')
         plt.axis('equal')
 
-        plt.savefig(os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}.png'))
+        output_file = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}.png')
+        plt.savefig(output_file)
         plt.close()
+        print("File disimpan ke:", output_file)
 
     def get_kategori(persentase):
         if 20.00 <= persentase <= 36.00: return 'Sangat Tidak Setuju'
@@ -82,3 +84,4 @@ else:
         df_summary = pd.DataFrame(summary_data)
         output_path = os.path.join(target_dir, f'Analisis_{var_name}.xlsx')
         df_summary.to_excel(output_path, index=False)
+        print("File disimpan ke:", output_path)

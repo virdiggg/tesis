@@ -130,8 +130,10 @@ for col in profile_cols:
     plt.title(f'Distribusi Responden Berdasarkan {col.title()}')
     plt.axis('equal')
 
-    plt.savefig(os.path.join('target', f'pie_chart_{col.replace(" ", "_")}.png'))
+    output_file = os.path.join('target', f'pie_chart_{col.replace(" ", "_")}.png')
+    plt.savefig(output_file)
     plt.close()
+    print("File disimpan ke:", output_file)
 
 for var_name, config in variabel_config.items():
     summary_data = []
@@ -163,3 +165,4 @@ for var_name, config in variabel_config.items():
     df_summary = pd.DataFrame(summary_data)
     output_path = os.path.join('target', f'Analisis_{var_name}.xlsx')
     df_summary.to_excel(output_path, index=False)
+    print("File disimpan ke:", output_path)
