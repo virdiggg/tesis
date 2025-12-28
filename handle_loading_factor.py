@@ -1,4 +1,6 @@
 import pandas as pd
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 import re, os
 
 input_file = os.path.join('target', 'loading_factor.xlsx')
@@ -50,5 +52,16 @@ for idx, ind in df_valid.iterrows():
 result.index.name = None
 
 result.to_excel(output_file)
+
+wb = load_workbook(output_file)
+ws = wb.active
+
+default_font = Font(name="Times New Roman", size=12)
+
+for row in ws.iter_rows():
+    for cell in row:
+        cell.font = default_font
+
+wb.save(output_file)
 
 print("File disimpan ke:", output_file)

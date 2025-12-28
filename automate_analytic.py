@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 import os
 
 os.makedirs('target', exist_ok=True)
@@ -84,4 +86,16 @@ else:
         df_summary = pd.DataFrame(summary_data)
         output_path = os.path.join(target_dir, f'Analisis_{var_name}.xlsx')
         df_summary.to_excel(output_path, index=False)
+
+        wb = load_workbook(output_path)
+        ws = wb.active
+
+        default_font = Font(name="Times New Roman", size=12)
+
+        for row in ws.iter_rows():
+            for cell in row:
+                cell.font = default_font
+
+        wb.save(output_path)
+
         print("File disimpan ke:", output_path)

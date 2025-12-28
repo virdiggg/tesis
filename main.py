@@ -1,7 +1,8 @@
 import pandas as pd
 import os, random
 import matplotlib.pyplot as plt
-import numpy as np
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 from sqlalchemy import create_engine
 
 total_responden = 375
@@ -165,4 +166,16 @@ for var_name, config in variabel_config.items():
     df_summary = pd.DataFrame(summary_data)
     output_path = os.path.join('target', f'Analisis_{var_name}.xlsx')
     df_summary.to_excel(output_path, index=False)
+
+    wb = load_workbook(output_path)
+    ws = wb.active
+
+    default_font = Font(name="Times New Roman", size=12)
+
+    for row in ws.iter_rows():
+        for cell in row:
+            cell.font = default_font
+
+    wb.save(output_path)
+
     print("File disimpan ke:", output_path)
