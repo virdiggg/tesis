@@ -26,7 +26,7 @@ try:
     result_table = df_filtered[['Konstruk', column_ave]].reset_index(drop=True)
     result_table.columns = ['Konstruk', 'Average Variance Extracted (AVE)']
 
-    # print("Tabel Hasil Evaluasi Validitas Konvergen (AVE)")
+    # print("Preview Tabel:")
     # print("-" * 55)
     # print(result_table.to_string(index=False))
 
