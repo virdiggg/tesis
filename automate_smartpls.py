@@ -54,47 +54,46 @@ def process_validity(df_raw):
     return result
 
 def process_loading_factor(df_raw):
-    """Proses Loading Factor: Ekstraksi indikator dan pembersihan matriks."""
+    """Proses Loading Factor: Menampilkan label indikator di kolom pertama."""
     indikator_col = df_raw.columns[0]
 
     def is_valid_indikator(val):
-        if pd.isna(val):
-            return False
+        if pd.isna(val): return False
         val = str(val)
-        if "*" in val:
-            return False
+        if "*" in val: return False
         return bool(re.match(r"^[A-Za-z]+[0-9]+$", val))
 
     df_valid = df_raw[df_raw[indikator_col].apply(is_valid_indikator)].copy()
 
-    indikator = df_valid[indikator_col].astype(str)
-
-    def get_variabel_from_indikator(kode):
-        return re.match(r"[A-Za-z]+", kode).group(0)
-
-    def get_variabel_from_column(col):
-        match = re.match(r"[A-Za-z]+", str(col))
+    def get_variabel_from_text(text):
+        match = re.match(r"[A-Za-z]+", str(text))
         return match.group(0) if match else None
 
     col_variabel_map = {
-        col: get_variabel_from_column(col)
+        col: get_variabel_from_text(col)
         for col in df_valid.columns[1:]
     }
 
-    unique_variabel = sorted(set(col_variabel_map.values()))
+    unique_variabel = sorted(set(v for v in col_variabel_map.values() if v))
 
-    result = pd.DataFrame(index=indikator, columns=unique_variabel)
+    result = pd.DataFrame(index=df_valid[indikator_col].values, columns=unique_variabel)
 
-    for idx, ind in df_valid.iterrows():
-        var_ind = get_variabel_from_indikator(ind[indikator_col])
+    for idx, row in df_valid.iterrows():
+        ind_code = row[indikator_col]
+        var_prefix = get_variabel_from_text(ind_code)
 
         for col, var_col in col_variabel_map.items():
-            if var_col == var_ind:
-                value = ind[col]
+            if var_col == var_prefix:
+                value = row[col]
                 if pd.notna(value):
-                    result.loc[ind[indikator_col], var_ind] = value
+                    result.loc[ind_code, var_prefix] = value
                 break
 
+    def natural_sort_key(s):
+        return [int(text) if text.isdigit() else text.lower() 
+                for text in re.split('([0-9]+)', str(s))]
+
+    result = result.reindex(sorted(result.index, key=natural_sort_key))
     return result
 
 try:
@@ -124,7 +123,7 @@ try:
 
     df_load_raw = pd.read_excel(input_file, sheet_name='loading factor')
     df_load_final = process_loading_factor(df_load_raw)
-    df_load_final.to_excel(output_loading, index=False)
+    df_load_final.to_excel(output_loading, index='Indikator')
     formatting_excel(output_loading)
     # preview_table(df_load_final, "Loading Factors")
 
