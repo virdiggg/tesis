@@ -1,3 +1,4 @@
 example/*
 venv/*
 source/*
+*.py[cod]
