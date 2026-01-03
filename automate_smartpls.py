@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os, re, gc
-from util import formatting_excel
+from util import formatting_excel, preview_table
 
 input_file = os.path.join('target', 'smartpls.xlsx')
 output_flc = os.path.join('result', 'flc_cleaned.xlsx')
@@ -58,28 +58,41 @@ def process_loading_factor(df_raw):
     indikator_col = df_raw.columns[0]
 
     def is_valid_indikator(val):
-        if pd.isna(val): return False
+        if pd.isna(val):
+            return False
         val = str(val)
-        if "*" in val: return False
+        if "*" in val:
+            return False
         return bool(re.match(r"^[A-Za-z]+[0-9]+$", val))
 
     df_valid = df_raw[df_raw[indikator_col].apply(is_valid_indikator)].copy()
 
-    def get_var_prefix(text):
-        match = re.match(r"[A-Za-z]+", str(text))
+    indikator = df_valid[indikator_col].astype(str)
+
+    def get_variabel_from_indikator(kode):
+        return re.match(r"[A-Za-z]+", kode).group(0)
+
+    def get_variabel_from_column(col):
+        match = re.match(r"[A-Za-z]+", str(col))
         return match.group(0) if match else None
 
-    col_variabel_map = {col: get_var_prefix(col) for col in df_valid.columns[1:]}
-    unique_variabel = sorted(set(v for v in col_variabel_map.values() if v))
+    col_variabel_map = {
+        col: get_variabel_from_column(col)
+        for col in df_valid.columns[1:]
+    }
 
-    result = pd.DataFrame(index=df_valid[indikator_col].astype(str), columns=unique_variabel)
+    unique_variabel = sorted(set(col_variabel_map.values()))
 
-    for _, row in df_valid.iterrows():
-        ind_code = row[indikator_col]
-        var_prefix = get_var_prefix(ind_code)
-        for col, col_prefix in col_variabel_map.items():
-            if col_prefix == var_prefix and pd.notna(row[col]):
-                result.loc[ind_code, col_prefix] = row[col]
+    result = pd.DataFrame(index=indikator, columns=unique_variabel)
+
+    for idx, ind in df_valid.iterrows():
+        var_ind = get_variabel_from_indikator(ind[indikator_col])
+
+        for col, var_col in col_variabel_map.items():
+            if var_col == var_ind:
+                value = ind[col]
+                if pd.notna(value):
+                    result.loc[ind[indikator_col], var_ind] = value
                 break
 
     return result
@@ -89,6 +102,7 @@ try:
     df_flc_final = process_flc(df_flc_raw)
     df_flc_final.to_excel(output_flc, index_label="Konstruk")
     formatting_excel(output_flc)
+    # preview_table(df_flc_final, "Fornell-Larcker Criterion")
 
     gc.collect()
 
@@ -96,6 +110,7 @@ try:
     df_htmt_final = process_htmt(df_htmt_raw)
     df_htmt_final.to_excel(output_htmt, index_label="Konstruk")
     formatting_excel(output_htmt)
+    # preview_table(df_htmt_final, "Heterotrait-Monotrait Ratio (HTMT)")
 
     gc.collect()
 
@@ -103,6 +118,7 @@ try:
     df_val_final = process_validity(df_val_raw)
     df_val_final.to_excel(output_val_rel, index=False)
     formatting_excel(output_val_rel)
+    # preview_table(df_val_final, "Construct Validity (AVE)")
 
     gc.collect()
 
@@ -110,6 +126,7 @@ try:
     df_load_final = process_loading_factor(df_load_raw)
     df_load_final.to_excel(output_loading, index=False)
     formatting_excel(output_loading)
+    # preview_table(df_load_final, "Loading Factors")
 
     gc.collect()
 

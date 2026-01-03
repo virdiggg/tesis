@@ -1,5 +1,6 @@
 from openpyxl import load_workbook
 from openpyxl.styles import Font
+from tabulate import tabulate
 import os
 
 def formatting_excel(file_path, font_size=12):
@@ -25,3 +26,13 @@ def formatting_excel(file_path, font_size=12):
 
     except Exception as e:
         print(f"Terjadi kesalahan saat memproses Excel: {e}")
+
+def preview_table(df, title):
+    """
+    Menampilkan pratinjau DataFrame di terminal dengan format yang rapi.
+    """
+    print(f"\n" + "="*50)
+    print(f" PREVIEW: {title.upper()} ")
+    print("="*50)
+    print(tabulate(df, headers='keys', tablefmt='grid', showindex=True))
+    print("="*50 + "\n")
