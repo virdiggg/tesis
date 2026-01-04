@@ -34,15 +34,6 @@ SIGNIFICANCE_LEVEL = 0.025 # One tail
 
 # =============================================================================
 # Mulai dari sini untuk proses, jangan diubah
-output_flc = os.path.join('result', 'cleaned_flc.xlsx')
-output_htmt = os.path.join('result', 'cleaned_htmt.xlsx')
-output_val = os.path.join('result', 'cleaned_validity.xlsx')
-output_rel = os.path.join('result', 'cleaned_reliability.xlsx')
-output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
-output_boot = os.path.join('result', 'cleaned_bootstrapping.xlsx')
-output_r_square = os.path.join("result", "cleaned_r_square.xlsx")
-output_blindfold = os.path.join("result", "cleaned_blindfold.xlsx")
-
 def process_flc(df_raw):
     """Proses Fornell-Larcker: Diagonal tetap ada (k=1), nama inisial."""
     valid_labels = [label for label in df_raw.index if label in short_mapping]
@@ -337,6 +328,59 @@ def process_gof(df_validity, df_r_square):
 
     return result
 
+def process_vif(df_raw):
+    """
+    Proses VIF SmartPLS (FINAL):
+    - Konstruk utama  → MAX VIF indikator
+    - Interaksi       → Ambil langsung
+    """
+
+    label_col = df_raw.columns[0]
+    vif_col = df_raw.columns[1]
+
+    indikator_vif = {}
+    interaction_rows = []
+
+    prefix_to_konstruk = {
+        short_mapping[k]: full_mapping[k]
+        for k in short_mapping
+    }
+
+    for _, row in df_raw.iterrows():
+        label = str(row[label_col]).strip()
+        vif = row[vif_col]
+
+        if pd.isna(vif):
+            continue
+
+        if "*" in label:
+            left, right = [p.strip() for p in label.split("*")]
+
+            if left in full_mapping and right in full_mapping:
+                interaction_rows.append({
+                    "Konstruk": f"{full_mapping[left]} × {full_mapping[right]}",
+                    "VIF": round(float(vif), 3)
+                })
+
+        elif re.match(r"^[A-Za-z]+[0-9]+$", label):
+            prefix = re.match(r"[A-Za-z]+", label).group()
+
+            konstruk = prefix_to_konstruk.get(prefix)
+            if konstruk:
+                indikator_vif.setdefault(konstruk, []).append(float(vif))
+
+    konstruk_rows = [
+        {
+            "Konstruk": konstruk,
+            "VIF": round(max(vifs), 3)
+        }
+        for konstruk, vifs in indikator_vif.items()
+    ]
+
+    result = pd.DataFrame(konstruk_rows + interaction_rows)
+
+    return result
+
 try:
     with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
 
@@ -377,6 +421,11 @@ try:
         df_nfi = pd.read_excel(input_file, sheet_name='nfi', index_col=0)
         df_nfi.to_excel(writer, sheet_name='nfi', index_label="")
 
+        df_vif_raw = pd.read_excel(input_file, sheet_name='vif', header=None)
+        df_vif_final = process_vif(df_vif_raw)
+        df_vif_final.to_excel(writer, sheet_name='vif', index=False)
+
+    gc.collect()
     formatting_excel(output_file)
 
 except Exception as e:
