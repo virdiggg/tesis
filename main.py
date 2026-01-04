@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 from util import formatting_excel
 from sqlalchemy import create_engine
 
-total_responden = 375
+TOTAL_RESPONDEN = 375
 
-skor_maksimal_per_orang = 5
-skor_ideal = total_responden * skor_maksimal_per_orang # 1875
+SKOR_MAKS = 5
+SKOR_IDEAL = TOTAL_RESPONDEN * SKOR_MAKS # 1875
 
 variabel_config = {
     'Pelatihan': {'cols': [f'P{i}' for i in range(1, 11)], 'code': 'X1'},
@@ -144,7 +144,7 @@ for var_name, config in variabel_config.items():
         counts = df_final[col].value_counts().reindex([1, 2, 3, 4, 5], fill_value=0)
 
         skor_aktual = sum(counts[i] * i for i in range(1, 6))
-        persentase = (skor_aktual / skor_ideal) * 100
+        persentase = (skor_aktual / SKOR_IDEAL) * 100
 
         row = {
             'No': idx,
@@ -156,7 +156,7 @@ for var_name, config in variabel_config.items():
             'Skor 4': counts[4],
             'Skor 5': counts[5],
             'Skor Aktual': skor_aktual,
-            'Skor Ideal': skor_ideal,
+            'Skor Ideal': SKOR_IDEAL,
             'Persentase (%)': round(persentase, 2),
             'Kategori': get_kategori(persentase)
         }
