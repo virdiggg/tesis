@@ -374,6 +374,9 @@ try:
         df_gof = process_gof(df_val_final, df_r_square_final)
         df_gof.to_excel(writer, sheet_name='gof', index=False)
 
+        df_nfi = pd.read_excel(input_file, sheet_name='nfi', index_col=0)
+        df_nfi.to_excel(writer, sheet_name='nfi', index_label="")
+
     formatting_excel(output_file)
 
 except Exception as e:
