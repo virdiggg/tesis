@@ -68,6 +68,20 @@ def process_validity(df_raw):
     df_filtered = df_raw[df_raw[column_label].isin(full_mapping.keys())].copy()
     df_filtered['Konstruk'] = df_filtered[column_label].map(full_mapping)
     result = df_filtered[['Konstruk', column_ave]].reset_index(drop=True)
+
+    ave_values = result[column_ave].dropna()
+
+    ave_sum = round(ave_values.sum(), 3)
+    ave_count = int(ave_values.count())
+    ave_avg = round(ave_sum / ave_count, 3) if ave_count > 0 else ""
+
+    summary_rows = pd.DataFrame([
+        {"Konstruk": "SUM", column_ave: ave_sum},
+        {"Konstruk": "COUNT", column_ave: ave_count},
+        {"Konstruk": "AVERAGE (SUM/COUNT)", column_ave: ave_avg},
+    ])
+
+    result = pd.concat([result, summary_rows], ignore_index=True)
     return result
 
 def process_reliability(df_raw):
