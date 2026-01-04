@@ -3,14 +3,12 @@ import numpy as np
 import os, re, gc
 from util import formatting_excel, preview_table
 
+# Bagian ini untuk konfigurasi, disesuaikan dengan kebutuhan
+# =============================================================================
+# File input
 input_file = os.path.join('target', 'smartpls.xlsx')
-output_flc = os.path.join('result', 'cleaned_flc.xlsx')
-output_htmt = os.path.join('result', 'cleaned_htmt.xlsx')
-output_val = os.path.join('result', 'cleaned_validity.xlsx')
-output_rel = os.path.join('result', 'cleaned_reliability.xlsx')
-output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
-output_boot = os.path.join('result', 'cleaned_bootstrapping.xlsx')
 
+# Mapping variabel
 full_mapping = {
     "P (X1)": "Pelatihan",
     "WB (X2)": "Work-Life Balance",
@@ -19,6 +17,7 @@ full_mapping = {
     "PK (Y)": "Produktivitas Karyawan"
 }
 
+# Mapping variabel
 short_mapping = {
     "P (X1)": "P",
     "WB (X2)": "WB",
@@ -27,8 +26,19 @@ short_mapping = {
     "PK (Y)": "PK"
 }
 
+# Ketentuan level signifikan, sesuaikan one tail atau two tail
 SIGNIFICANCE_LEVEL = 0.025 # One tail
 # SIGNIFICANCE_LEVEL = 0.05 # Two tail
+# =============================================================================
+
+# =============================================================================
+# Mulai dari sini untuk proses, jangan diubah
+output_flc = os.path.join('result', 'cleaned_flc.xlsx')
+output_htmt = os.path.join('result', 'cleaned_htmt.xlsx')
+output_val = os.path.join('result', 'cleaned_validity.xlsx')
+output_rel = os.path.join('result', 'cleaned_reliability.xlsx')
+output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
+output_boot = os.path.join('result', 'cleaned_bootstrapping.xlsx')
 
 def process_flc(df_raw):
     """Proses Fornell-Larcker: Diagonal tetap ada (k=1), nama inisial."""
@@ -139,9 +149,9 @@ def process_bootstrapping(df_raw):
     def normalize_label(label):
         """
         Mengubah:
-        - 'BK (X3)' -> 'BK'
-        - 'BK'      -> 'BK'
-        - 'PK (Y)'  -> 'PK'
+        - 'VAL1 (X3)' -> 'VAL1'
+        - 'VAL1'      -> 'VAL1'
+        - 'VAL2 (Y)'  -> 'VAL2'
         """
         label = str(label).strip()
         return label.split("(")[0].strip()

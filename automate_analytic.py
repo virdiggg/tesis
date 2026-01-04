@@ -1,27 +1,81 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from util import formatting_excel
-import os
+import os, re
 
-os.makedirs('target', exist_ok=True)
-os.makedirs('result', exist_ok=True)
-input_file = os.path.join('target', 'Hasil_Profil_Responden.xlsx')
 target_dir = 'result'
+os.makedirs('target', exist_ok=True)
+os.makedirs(target_dir, exist_ok=True)
+
+# Bagian ini untuk konfigurasi, disesuaikan dengan kebutuhan
+# =============================================================================
+# File input
+input_file = os.path.join('target', 'Hasil_Profil_Responden.xlsx')
+
+# Mapping profil responden
+profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja']
+
+# Mapping variabel
+full_mapping = {
+    "P (X1)": "Pelatihan",
+    "WB (X2)": "Work-Life Balance",
+    "BK (X3)": "Beban Kerja",
+    "D (Z)": "Digitalisasi",
+    "PK (Y)": "Produktivitas Karyawan"
+}
+
+# Mapping variabel
+short_mapping = {
+    "P (X1)": "P",
+    "WB (X2)": "WB",
+    "BK (X3)": "BK",
+    "D (Z)": "D",
+    "PK (Y)": "PK"
+}
+# =============================================================================
+
+# =============================================================================
+# Mulai dari sini untuk proses, jangan diubah
+def process_mapping_auto(full_mapping, short_mapping, df):
+    """
+    Membuat variabel_config otomatis berdasarkan kolom DataFrame
+    """
+
+    variabel_config = {}
+
+    columns = list(df.columns)
+
+    for key, full_name in full_mapping.items():
+        short = short_mapping[key]
+
+        code = key[key.find("(")+1:key.find(")")]
+
+        var_name = full_name.replace(" ", "_")
+
+        pattern = re.compile(rf"^{short}\d+$")
+        indikator_cols = sorted(
+            [col for col in columns if pattern.match(col)],
+            key=lambda x: int(re.findall(r"\d+", x)[0])
+        )
+
+        if indikator_cols:
+            variabel_config[var_name] = {
+                "cols": indikator_cols,
+                "code": code
+            }
+
+    return variabel_config
 
 if not os.path.exists(input_file):
     print(f"Error: File {input_file} tidak ditemukan!")
 else:
     df_final = pd.read_excel(input_file)
 
-    profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja']
-
-    variabel_config = {
-        'Pelatihan': {'cols': [f'P{i}' for i in range(1, 11)], 'code': 'X1'},
-        'Work_Life_Balance': {'cols': [f'WB{i}' for i in range(1, 7)], 'code': 'X2'},
-        'Beban_Kerja': {'cols': [f'BK{i}' for i in range(1, 7)], 'code': 'X3'},
-        'Digitalisasi': {'cols': [f'D{i}' for i in range(1, 12)], 'code': 'Z'},
-        'Produktivitas': {'cols': [f'PK{i}' for i in range(1, 9)], 'code': 'Y'}
-    }
+    variabel_config = process_mapping_auto(
+        full_mapping,
+        short_mapping,
+        df_final
+    )
 
     pernyataan_cols = []
     for v in variabel_config.values():
