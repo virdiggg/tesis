@@ -39,6 +39,8 @@ output_val = os.path.join('result', 'cleaned_validity.xlsx')
 output_rel = os.path.join('result', 'cleaned_reliability.xlsx')
 output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
 output_boot = os.path.join('result', 'cleaned_bootstrapping.xlsx')
+output_r_square = os.path.join("result", "cleaned_r_square.xlsx")
+output_blindfold = os.path.join("result", "cleaned_blindfold.xlsx")
 
 def process_flc(df_raw):
     """Proses Fornell-Larcker: Diagonal tetap ada (k=1), nama inisial."""
@@ -212,6 +214,73 @@ def process_bootstrapping(df_raw):
 
     return pd.DataFrame(rows)
 
+def process_r_square(df_raw):
+    """
+    Proses R-Square SmartPLS:
+    - Ambil variabel endogen (Y)
+    - Gunakan nama dari full_mapping
+    """
+
+    df = df_raw.copy()
+
+    konstruk_col = df.columns[0]
+
+    endogen_keys = [
+        k for k in full_mapping.keys()
+        if "(Y)" in k
+    ]
+
+    df_filtered = df[
+        df[konstruk_col].isin(endogen_keys)
+    ].copy()
+
+    df_filtered["Variabel"] = df_filtered[konstruk_col].map(
+        lambda x: f"{full_mapping[x]} ({x.split()[0]})"
+    )
+
+    result = df_filtered[
+        ["Variabel", "R Square", "R Square Adjusted"]
+    ].reset_index(drop=True)
+
+    return result
+
+def process_blindfold(df_raw):
+    """
+    Proses Blindfolding SmartPLS:
+    - Ambil konstruk utama saja
+    - Buang jalur mediasi
+    - Skala SSO & SSE (÷1000)
+    """
+
+    df = df_raw.copy()
+
+    konstruk_col = df.columns[0]
+
+    df_filtered = df[
+        df[konstruk_col].isin(full_mapping.keys())
+    ].copy()
+
+    df_filtered["Konstruk"] = df_filtered[konstruk_col].map(full_mapping)
+
+    def scale(val):
+        if pd.isna(val):
+            return ""
+        return round(val / 1000, 3)
+
+    df_filtered["SSO"] = df_filtered["SSO"].apply(scale)
+    df_filtered["SSE"] = df_filtered["SSE"].apply(scale)
+
+    if "Q² (=1-SSE/SSO)" in df_filtered.columns:
+        df_filtered["Q² (=1-SSE/SSO)"] = df_filtered[
+            "Q² (=1-SSE/SSO)"
+        ].apply(lambda x: round(x, 3) if pd.notna(x) else "")
+
+    result = df_filtered[
+        ["Konstruk", "SSO", "SSE", "Q² (=1-SSE/SSO)"]
+    ].reset_index(drop=True)
+
+    return result
+
 try:
     df_flc_raw = pd.read_excel(input_file, sheet_name='flc', index_col=0)
     df_flc_final = process_flc(df_flc_raw)
@@ -255,6 +324,18 @@ try:
     df_boot_final.to_excel(output_boot, index=False)
     formatting_excel(output_boot)
     # preview_table(df_boot_final, "Bootstrapping Results")
+
+    df_r_square_raw = pd.read_excel(input_file, sheet_name='r square')
+    df_r_square_final = process_r_square(df_r_square_raw)
+    df_r_square_final.to_excel(output_r_square, index=False)
+    formatting_excel(output_r_square)
+    preview_table(df_r_square_final, "R-Square Results")
+
+    df_blind_raw = pd.read_excel(input_file, sheet_name='blindfold')
+    df_blind_final = process_blindfold(df_blind_raw)
+    df_blind_final.to_excel(output_blindfold, index=False)
+    formatting_excel(output_blindfold)
+    preview_table(df_blind_final, "Blindfold Results")
 
     gc.collect()
 
