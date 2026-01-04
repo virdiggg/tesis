@@ -329,13 +329,13 @@ try:
     df_r_square_final = process_r_square(df_r_square_raw)
     df_r_square_final.to_excel(output_r_square, index=False)
     formatting_excel(output_r_square)
-    preview_table(df_r_square_final, "R-Square Results")
+    # preview_table(df_r_square_final, "R-Square Results")
 
     df_blind_raw = pd.read_excel(input_file, sheet_name='blindfold')
     df_blind_final = process_blindfold(df_blind_raw)
     df_blind_final.to_excel(output_blindfold, index=False)
     formatting_excel(output_blindfold)
-    preview_table(df_blind_final, "Blindfold Results")
+    # preview_table(df_blind_final, "Blindfold Results")
 
     gc.collect()
 
