@@ -1,21 +1,25 @@
 from openpyxl import load_workbook
-from openpyxl.styles import Font, Border, Side
+from openpyxl.styles import Font, Border, Side, Alignment
 from tabulate import tabulate
 import os
 
-def formatting_excel(file_path, font_size=12):
+FONT_SIZE = 12
+FONT_NAME = "Times New Roman"
+
+def formatting_excel(file_path):
     """
-    Mengubah seluruh font di file Excel menjadi Times New Roman.
+    Format seluruh sheet Excel:
+    - Font Times New Roman
+    - All borders (thin)
+    - Auto column width
     """
+
     if not os.path.exists(file_path):
         print(f"Error: File {file_path} tidak ditemukan.")
         return
 
     try:
         wb = load_workbook(file_path)
-        ws = wb.active
-
-        default_font = Font(name="Times New Roman", size=font_size)
 
         thin_border = Border(
             left=Side(style="thin"),
@@ -24,22 +28,34 @@ def formatting_excel(file_path, font_size=12):
             bottom=Side(style="thin")
         )
 
-        for row in ws.iter_rows():
-            for cell in row:
-                cell.font = default_font
-                cell.border = thin_border
+        for ws in wb.worksheets:
 
-        for col in ws.columns:
-            max_length = 0
-            col_letter = col[0].column_letter
+            for row in ws.iter_rows():
+                for cell in row:
+                    cell.border = thin_border
 
-            for cell in col:
-                if cell.value is not None:
-                    cell_length = len(str(cell.value))
-                    if cell_length > max_length:
-                        max_length = cell_length
+                    if cell.row == 1:
+                        cell.font = Font(name=FONT_NAME, size=FONT_SIZE, bold=True)
+                    else:
+                        cell.font = Font(name=FONT_NAME, size=FONT_SIZE)
 
-            ws.column_dimensions[col_letter].width = max_length * 1.2 + 2
+                    if cell.column == 1:
+                        cell.alignment = Alignment(horizontal="left", vertical="center")
+                    else:
+                        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+            for col in ws.columns:
+                max_length = 0
+                col_letter = col[0].column_letter
+
+                for cell in col:
+                    if cell.value is not None:
+                        max_length = max(
+                            max_length,
+                            len(str(cell.value))
+                        )
+
+                ws.column_dimensions[col_letter].width = max_length * 1.2 + 2
 
         wb.save(file_path)
         print(f"File disimpan di: {file_path}")
