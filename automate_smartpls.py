@@ -6,8 +6,9 @@ from util import formatting_excel, preview_table
 input_file = os.path.join('target', 'smartpls.xlsx')
 output_flc = os.path.join('result', 'flc_cleaned.xlsx')
 output_htmt = os.path.join('result', 'htmt_cleaned.xlsx')
-output_val_rel = os.path.join('result', 'validity_and_reability_cleaned.xlsx')
+output_val = os.path.join('result', 'validity_cleaned.xlsx')
 output_loading = os.path.join('result', 'loading_factor_cleaned.xlsx')
+output_rel = os.path.join('result', 'reliability_cleaned.xlsx')
 
 full_mapping = {
     "P (X1)": "Pelatihan",
@@ -51,6 +52,30 @@ def process_validity(df_raw):
     df_filtered = df_raw[df_raw[column_label].isin(full_mapping.keys())].copy()
     df_filtered['Konstruk'] = df_filtered[column_label].map(full_mapping)
     result = df_filtered[['Konstruk', column_ave]].reset_index(drop=True)
+    return result
+
+def process_reliability(df_raw):
+    """
+    Proses Reliability:
+    - Ambil konstruk utama saja (tanpa jalur mediasi)
+    - Ambil Cronbach's Alpha, rho_A, dan Composite Reliability
+    - Ganti nama konstruk menjadi nama lengkap
+    """
+    konstruk_col = df_raw.columns[0]
+
+    df_filtered = df_raw[
+        df_raw[konstruk_col].isin(full_mapping.keys())
+    ].copy()
+
+    df_filtered['Konstruk'] = df_filtered[konstruk_col].map(full_mapping)
+
+    result = df_filtered[[
+        'Konstruk',
+        "Cronbach's Alpha",
+        'rho_A',
+        'Composite Reliability'
+    ]].reset_index(drop=True)
+
     return result
 
 def process_loading_factor(df_raw):
@@ -115,9 +140,14 @@ try:
 
     df_val_raw = pd.read_excel(input_file, sheet_name='validity and reability')
     df_val_final = process_validity(df_val_raw)
-    df_val_final.to_excel(output_val_rel, index=False)
-    formatting_excel(output_val_rel)
+    df_val_final.to_excel(output_val, index=False)
+    formatting_excel(output_val)
     # preview_table(df_val_final, "Construct Validity (AVE)")
+
+    df_rel_final = process_reliability(df_val_raw)
+    df_rel_final.to_excel(output_rel, index=False)
+    formatting_excel(output_rel)
+    # preview_table(df_rel_final, "Construct Reliability")
 
     gc.collect()
 
