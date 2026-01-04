@@ -1,5 +1,15 @@
-# Judul: Pengaruh Pelatihan, Work-Life Balance, dan Beban Kerja terhadap Produktivitas Karyawan dengan Digitalisasi sebagai Variabel Moderasi
-# Judul 2: Analisis Pengaruh Pelatihan, Work-life Balance, dan Beban Kerja Terhadap Produktivitas Karyawan dengan Digitalisasi Sebagai Variabel Moderasi pada Karyawan Manufaktur di Tangerang
+# Judul
+```
+Pengaruh Pelatihan, Work-Life Balance, dan Beban Kerja terhadap Produktivitas Karyawan dengan Digitalisasi sebagai Variabel Moderasi
+```
+
+```
+Analisis Pengaruh Pelatihan, Work-life Balance, dan Beban Kerja Terhadap Produktivitas Karyawan dengan Digitalisasi Sebagai Variabel Moderasi pada Karyawan Manufaktur di Tangerang Raya
+```
+
+```
+ANALISIS PENGARUH PELATIHAN, WORK-LIFE BALANCE, DAN BEBAN KERJA TERHADAP PRODUKTIVITAS KARYAWAN DENGAN DIGITALISASI SEBAGAI VARIABEL MODERASI PADA KARYAWAN MANUFAKTUR DI TANGERANG RAYA
+```
 
 # Dosen
 ```
