@@ -418,12 +418,15 @@ try:
         df_gof = process_gof(df_val_final, df_r_square_final)
         df_gof.to_excel(writer, sheet_name='gof', index=False)
 
-        df_nfi = pd.read_excel(input_file, sheet_name='nfi', index_col=0)
-        df_nfi.to_excel(writer, sheet_name='nfi', index_label="")
-
         df_vif_raw = pd.read_excel(input_file, sheet_name='vif', header=None)
         df_vif_final = process_vif(df_vif_raw)
         df_vif_final.to_excel(writer, sheet_name='vif', index=False)
+
+        df_nfi = pd.read_excel(input_file, sheet_name='nfi', index_col=0)
+        df_nfi.to_excel(writer, sheet_name='nfi', index_label="")
+
+        df_penelitian = pd.read_excel(input_file, sheet_name='penelitian terdahulu', index_col=0)
+        df_penelitian.to_excel(writer, sheet_name='penelitian terdahulu', index=False)
 
     gc.collect()
     formatting_excel(output_file)

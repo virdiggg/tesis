@@ -21,8 +21,6 @@ def formatting_excel(file_path):
     try:
         wb = load_workbook(file_path)
 
-        default_font = Font(name=FONT_NAME, size=FONT_SIZE)
-
         thin_border = Border(
             left=Side(style="thin"),
             right=Side(style="thin"),
@@ -34,8 +32,12 @@ def formatting_excel(file_path):
 
             for row in ws.iter_rows():
                 for cell in row:
-                    cell.font = default_font
                     cell.border = thin_border
+
+                    if cell.row == 1:
+                        cell.font = Font(name=FONT_NAME, size=FONT_SIZE, bold=True)
+                    else:
+                        cell.font = Font(name=FONT_NAME, size=FONT_SIZE)
 
                     if cell.column == 1:
                         cell.alignment = Alignment(horizontal="left", vertical="center")
