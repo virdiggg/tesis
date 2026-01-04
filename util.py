@@ -1,5 +1,5 @@
 from openpyxl import load_workbook
-from openpyxl.styles import Font
+from openpyxl.styles import Font, Border, Side
 from tabulate import tabulate
 import os
 
@@ -17,9 +17,29 @@ def formatting_excel(file_path, font_size=12):
 
         default_font = Font(name="Times New Roman", size=font_size)
 
+        thin_border = Border(
+            left=Side(style="thin"),
+            right=Side(style="thin"),
+            top=Side(style="thin"),
+            bottom=Side(style="thin")
+        )
+
         for row in ws.iter_rows():
             for cell in row:
                 cell.font = default_font
+                cell.border = thin_border
+
+        for col in ws.columns:
+            max_length = 0
+            col_letter = col[0].column_letter
+
+            for cell in col:
+                if cell.value is not None:
+                    cell_length = len(str(cell.value))
+                    if cell_length > max_length:
+                        max_length = cell_length
+
+            ws.column_dimensions[col_letter].width = max_length * 1.2 + 2
 
         wb.save(file_path)
         print(f"File disimpan di: {file_path}")

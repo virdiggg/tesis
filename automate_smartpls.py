@@ -7,8 +7,9 @@ input_file = os.path.join('target', 'smartpls.xlsx')
 output_flc = os.path.join('result', 'cleaned_flc.xlsx')
 output_htmt = os.path.join('result', 'cleaned_htmt.xlsx')
 output_val = os.path.join('result', 'cleaned_validity.xlsx')
-output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
 output_rel = os.path.join('result', 'cleaned_reliability.xlsx')
+output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
+output_boot = os.path.join('result', 'cleaned_bootstrapping.xlsx')
 
 full_mapping = {
     "P (X1)": "Pelatihan",
@@ -25,6 +26,9 @@ short_mapping = {
     "D (Z)": "D",
     "PK (Y)": "PK"
 }
+
+SIGNIFICANCE_LEVEL = 0.025 # One tail
+# SIGNIFICANCE_LEVEL = 0.05 # Two tail
 
 def process_flc(df_raw):
     """Proses Fornell-Larcker: Diagonal tetap ada (k=1), nama inisial."""
@@ -121,6 +125,83 @@ def process_loading_factor(df_raw):
     result = result.reindex(sorted(result.index, key=natural_sort_key))
     return result
 
+def process_bootstrapping(df_raw):
+    """
+    Proses Bootstrapping SmartPLS:
+    - Jalur langsung & mediasi
+    - Tahan terhadap format label SmartPLS
+    - SIGNIFICANCE_LEVEL global
+    """
+
+    path_col = df_raw.columns[0]
+    rows = []
+
+    def normalize_label(label):
+        """
+        Mengubah:
+        - 'BK (X3)' -> 'BK'
+        - 'BK'      -> 'BK'
+        - 'PK (Y)'  -> 'PK'
+        """
+        label = str(label).strip()
+        return label.split("(")[0].strip()
+
+    normalized_short_mapping = {
+        normalize_label(k): v
+        for k, v in short_mapping.items()
+    }
+
+    for _, row in df_raw.iterrows():
+        raw_path = str(row[path_col]).strip()
+
+        if "->" not in raw_path:
+            continue
+
+        left, right = raw_path.split("->")
+        right = normalize_label(right)
+
+        dst = normalized_short_mapping.get(right)
+        if not dst:
+            continue
+
+        if ">" in left:
+            parts = [normalize_label(p) for p in left.split(">")]
+
+            if len(parts) < 2:
+                continue
+
+            src_codes = []
+            for p in parts[:-1]:
+                code = normalized_short_mapping.get(p)
+                if code:
+                    src_codes.append(code)
+
+            if not src_codes:
+                continue
+
+            src = "".join(src_codes)
+            jalur = f"{src} → {dst}"
+
+        else:
+            src = normalized_short_mapping.get(normalize_label(left))
+            if not src:
+                continue
+
+            jalur = f"{src} → {dst}"
+
+        pval = float(row['P Values'])
+
+        rows.append({
+            "Jalur": jalur,
+            "Original Sample (O)": row['Original Sample (O)'],
+            "STDEV": row['Standard Deviation (STDEV)'],
+            "T-Statistic": row['T Statistics (|O/STDEV|)'],
+            "P-Value": pval,
+            "Keterangan": "Signifikan" if pval < SIGNIFICANCE_LEVEL else "Tidak signifikan"
+        })
+
+    return pd.DataFrame(rows)
+
 try:
     df_flc_raw = pd.read_excel(input_file, sheet_name='flc', index_col=0)
     df_flc_final = process_flc(df_flc_raw)
@@ -156,6 +237,14 @@ try:
     df_load_final.to_excel(output_loading, index='Indikator')
     formatting_excel(output_loading)
     # preview_table(df_load_final, "Loading Factors")
+
+    gc.collect()
+
+    df_boot_raw = pd.read_excel(input_file, sheet_name='bootstrapping')
+    df_boot_final = process_bootstrapping(df_boot_raw)
+    df_boot_final.to_excel(output_boot, index=False)
+    formatting_excel(output_boot)
+    # preview_table(df_boot_final, "Bootstrapping Results")
 
     gc.collect()
 
