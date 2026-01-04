@@ -99,6 +99,13 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 6.	H6 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
 7.	H7 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang Kepuasan Kerja sebagai pemoderasi.
 
+H1: Pelatihan berpengaruh positif terhadap Produktivitas Karyawan
+H2: Work-life balance berpengaruh positif terhadap Produktivitas 
+H3: Beban Kerja berpengaruh positif terhadap Produktivitas Karyawan
+H4: Digitalisasi berpengaruh positif terhadap Produktivitas Karyawan
+H5: Digitalisasi Memperkuat Hubungan Positif antara Pelatihan dan Produktivitas Karyawan
+H6: Digitalisasi Memperkuat Pengaruh Positif dari Work-life Balance terhadap Produktivitas Karyawan
+H7: Digitalisasi Memperkuat Pengaruh Positif dari Beban Kerja terhadap Produktivitas Karyawan
 
 Temp:
 ```
