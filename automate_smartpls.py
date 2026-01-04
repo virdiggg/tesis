@@ -1,12 +1,13 @@
 import pandas as pd
 import numpy as np
-import os, re, gc
+import os, re, gc, math
 from util import formatting_excel, preview_table
 
 # Bagian ini untuk konfigurasi, disesuaikan dengan kebutuhan
 # =============================================================================
 # File input
 input_file = os.path.join('target', 'smartpls.xlsx')
+output_file = os.path.join('result', 'cleaned_smartpls.xlsx')
 
 # Mapping variabel
 full_mapping = {
@@ -295,63 +296,85 @@ def process_blindfold(df_raw):
 
     return result
 
+def process_gof(df_validity, df_r_square):
+    """
+    Proses Goodness of Fit (GoF):
+    - Average AVE dari sheet validity
+    - Average R-Square dari sheet r square
+    """
+
+    ave_row = df_validity[
+        df_validity["Konstruk"] == "AVERAGE (SUM/COUNT)"
+    ]
+
+    if ave_row.empty:
+        raise ValueError("Row AVERAGE (SUM/COUNT) tidak ditemukan di sheet validity")
+
+    avg_ave = float(
+        ave_row["Average Variance Extracted (AVE)"].values[0]
+    )
+
+    avg_r_square = round(
+        df_r_square["R Square"].mean(), 3
+    )
+
+    gof_value = round(
+        math.sqrt(avg_ave * avg_r_square), 3
+    )
+
+    result = pd.DataFrame({
+        "Komponen": [
+            "Average AVE",
+            "Average R-Square",
+            "Goodness of Fit (GoF)"
+        ],
+        "Nilai": [
+            avg_ave,
+            avg_r_square,
+            gof_value
+        ]
+    })
+
+    return result
+
 try:
-    df_flc_raw = pd.read_excel(input_file, sheet_name='flc', index_col=0)
-    df_flc_final = process_flc(df_flc_raw)
-    df_flc_final.to_excel(output_flc, index_label="Konstruk")
-    formatting_excel(output_flc)
-    # preview_table(df_flc_final, "Fornell-Larcker Criterion")
+    with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
 
-    gc.collect()
+        df_flc_raw = pd.read_excel(input_file, sheet_name='flc', index_col=0)
+        df_flc_final = process_flc(df_flc_raw)
+        df_flc_final.to_excel(writer, sheet_name='flc', index_label="Konstruk")
 
-    df_htmt_raw = pd.read_excel(input_file, sheet_name='htmt', index_col=0)
-    df_htmt_final = process_htmt(df_htmt_raw)
-    df_htmt_final.to_excel(output_htmt, index_label="Konstruk")
-    formatting_excel(output_htmt)
-    # preview_table(df_htmt_final, "Heterotrait-Monotrait Ratio (HTMT)")
+        df_htmt_raw = pd.read_excel(input_file, sheet_name='htmt', index_col=0)
+        df_htmt_final = process_htmt(df_htmt_raw)
+        df_htmt_final.to_excel(writer, sheet_name='htmt', index_label="Konstruk")
 
-    gc.collect()
+        df_val_raw = pd.read_excel(input_file, sheet_name='validity and reability')
+        df_val_final = process_validity(df_val_raw)
+        df_val_final.to_excel(writer, sheet_name='validity', index=False)
 
-    df_val_raw = pd.read_excel(input_file, sheet_name='validity and reability')
-    df_val_final = process_validity(df_val_raw)
-    df_val_final.to_excel(output_val, index=False)
-    formatting_excel(output_val)
-    # preview_table(df_val_final, "Construct Validity (AVE)")
+        df_rel_final = process_reliability(df_val_raw)
+        df_rel_final.to_excel(writer, sheet_name='reliability', index=False)
 
-    df_rel_final = process_reliability(df_val_raw)
-    df_rel_final.to_excel(output_rel, index=False)
-    formatting_excel(output_rel)
-    # preview_table(df_rel_final, "Construct Reliability")
+        df_load_raw = pd.read_excel(input_file, sheet_name='loading factor')
+        df_load_final = process_loading_factor(df_load_raw)
+        df_load_final.to_excel(writer, sheet_name='loading factor', index_label="Indikator")
 
-    gc.collect()
+        df_boot_raw = pd.read_excel(input_file, sheet_name='bootstrapping')
+        df_boot_final = process_bootstrapping(df_boot_raw)
+        df_boot_final.to_excel(writer, sheet_name='bootstrapping', index=False)
 
-    df_load_raw = pd.read_excel(input_file, sheet_name='loading factor')
-    df_load_final = process_loading_factor(df_load_raw)
-    df_load_final.to_excel(output_loading, index='Indikator')
-    formatting_excel(output_loading)
-    # preview_table(df_load_final, "Loading Factors")
+        df_r_square_raw = pd.read_excel(input_file, sheet_name='r square')
+        df_r_square_final = process_r_square(df_r_square_raw)
+        df_r_square_final.to_excel(writer, sheet_name='r square', index=False)
 
-    gc.collect()
+        df_blind_raw = pd.read_excel(input_file, sheet_name='blindfold')
+        df_blind_final = process_blindfold(df_blind_raw)
+        df_blind_final.to_excel(writer, sheet_name='blindfold', index=False)
 
-    df_boot_raw = pd.read_excel(input_file, sheet_name='bootstrapping')
-    df_boot_final = process_bootstrapping(df_boot_raw)
-    df_boot_final.to_excel(output_boot, index=False)
-    formatting_excel(output_boot)
-    # preview_table(df_boot_final, "Bootstrapping Results")
+        df_gof = process_gof(df_val_final, df_r_square_final)
+        df_gof.to_excel(writer, sheet_name='gof', index=False)
 
-    df_r_square_raw = pd.read_excel(input_file, sheet_name='r square')
-    df_r_square_final = process_r_square(df_r_square_raw)
-    df_r_square_final.to_excel(output_r_square, index=False)
-    formatting_excel(output_r_square)
-    # preview_table(df_r_square_final, "R-Square Results")
-
-    df_blind_raw = pd.read_excel(input_file, sheet_name='blindfold')
-    df_blind_final = process_blindfold(df_blind_raw)
-    df_blind_final.to_excel(output_blindfold, index=False)
-    formatting_excel(output_blindfold)
-    # preview_table(df_blind_final, "Blindfold Results")
-
-    gc.collect()
+    formatting_excel(output_file)
 
 except Exception as e:
-    print(f"Terjadi kesalahan: {e}")
+    print("Terjadi kesalahan:", e)
