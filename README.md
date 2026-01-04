@@ -90,22 +90,13 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 - Beban Kerja > Produktivitas (OK)
 - Digitalisasi > Produktivitas (OK)
 
-
-1.	H1 : Terdapat pengaruh Kompensasi terhadap Kinerja Karyawan Wanita di Kota Tangerang.
-2.	H2 : Terdapat pengaruh Komunikasi terhadap Kinerja Karyawan Wanita di Kota Tangerang.
-3.	H3 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang.
-4.	H4 : Terdapat pengaruh Kepuasan Kerja terhadap Kinerja Karyawan Wanita di Kota Tangerang.
-5.	H5 : Terdapat pengaruh Kompensasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
-6.	H6 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang dengan Kepuasan Kerja sebagai pemoderasi.
-7.	H7 : Terdapat pengaruh Motivasi terhadap Kinerja Karyawan Wanita di Kota Tangerang Kepuasan Kerja sebagai pemoderasi.
-
-H1: Pelatihan berpengaruh positif terhadap Produktivitas Karyawan
-H2: Work-life balance berpengaruh positif terhadap Produktivitas 
-H3: Beban Kerja berpengaruh positif terhadap Produktivitas Karyawan
-H4: Digitalisasi berpengaruh positif terhadap Produktivitas Karyawan
-H5: Digitalisasi Memperkuat Hubungan Positif antara Pelatihan dan Produktivitas Karyawan
-H6: Digitalisasi Memperkuat Pengaruh Positif dari Work-life Balance terhadap Produktivitas Karyawan
-H7: Digitalisasi Memperkuat Pengaruh Positif dari Beban Kerja terhadap Produktivitas Karyawan
+1. H1: Pelatihan berpengaruh positif terhadap Produktivitas Karyawan
+2. H2: Work-life balance berpengaruh positif terhadap Produktivitas
+3. H3: Beban Kerja berpengaruh positif terhadap Produktivitas Karyawan
+4. H4: Digitalisasi berpengaruh positif terhadap Produktivitas Karyawan
+5. H5: Digitalisasi memperkuat pengaruh positif dari Pelatihan dan Produktivitas Karyawan
+6. H6: Digitalisasi memperkuat pengaruh positif dari Work-life Balance terhadap Produktivitas Karyawan
+7. H7: Digitalisasi memperkuat pengaruh positif dari Beban Kerja terhadap Produktivitas Karyawan
 
 Temp:
 ```
