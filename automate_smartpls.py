@@ -4,11 +4,11 @@ import os, re, gc
 from util import formatting_excel, preview_table
 
 input_file = os.path.join('target', 'smartpls.xlsx')
-output_flc = os.path.join('result', 'flc_cleaned.xlsx')
-output_htmt = os.path.join('result', 'htmt_cleaned.xlsx')
-output_val = os.path.join('result', 'validity_cleaned.xlsx')
-output_loading = os.path.join('result', 'loading_factor_cleaned.xlsx')
-output_rel = os.path.join('result', 'reliability_cleaned.xlsx')
+output_flc = os.path.join('result', 'cleaned_flc.xlsx')
+output_htmt = os.path.join('result', 'cleaned_htmt.xlsx')
+output_val = os.path.join('result', 'cleaned_validity.xlsx')
+output_loading = os.path.join('result', 'cleaned_loading_factor.xlsx')
+output_rel = os.path.join('result', 'cleaned_reliability.xlsx')
 
 full_mapping = {
     "P (X1)": "Pelatihan",
