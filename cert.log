@@ -1,0 +1,120 @@
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:CN = my.l-essential.com
+   i:C = US, O = Let's Encrypt, CN = R13
+   a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Dec  8 01:56:17 2025 GMT; NotAfter: Mar  8 01:56:16 2026 GMT
+-----BEGIN CERTIFICATE-----
+MIIFGTCCBAGgAwIBAgISBstBAt1gjxb2apx4yaX1HTeXMA0GCSqGSIb3DQEBCwUA
+MDMxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQwwCgYDVQQD
+EwNSMTMwHhcNMjUxMjA4MDE1NjE3WhcNMjYwMzA4MDE1NjE2WjAdMRswGQYDVQQD
+ExJteS5sLWVzc2VudGlhbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQDjvfSepKsJd+7i7RAf2Rzh4zPvKF/lIMzGifHgfzkaK77iTCNQX77fYUCw
+IZvuzz1HpjHiq5tcOdchRPA8Gcdpz7OmFpJ2XreOeiSKQIZGgcqoQJbXWSGXV8KH
+zqZFOOcwPooyhLpdxT/GbqMNN7Xm2uIDK41Lngs097o8F+fPSULpXCOlTFJX2zzd
+YQkLQldjYSMv+Rcz2x3iyG+l7EJwvU/z4WgASFDp4viQ0KGgFDXFds/oezkjoCI4
+uaedaL2HTewBTX8vRqZ+dTRnR6riQmmlYAXrm9aMiPsq5TrCXc5IeRe5vJgQsHV3
+Io5Rake1gdCp5y//w/6Dhg1mdpEJAgMBAAGjggI7MIICNzAOBgNVHQ8BAf8EBAMC
+BaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMAwGA1UdEwEB/wQCMAAw
+HQYDVR0OBBYEFOExvCZftkoW9LhagebC8Zjzr0t9MB8GA1UdIwQYMBaAFOernw8s
+M6BT015PeMiyhA471pIzMDMGCCsGAQUFBwEBBCcwJTAjBggrBgEFBQcwAoYXaHR0
+cDovL3IxMy5pLmxlbmNyLm9yZy8wNQYDVR0RBC4wLIISbXkubC1lc3NlbnRpYWwu
+Y29tghZ3d3cubXkubC1lc3NlbnRpYWwuY29tMBMGA1UdIAQMMAowCAYGZ4EMAQIB
+MC4GA1UdHwQnMCUwI6AhoB+GHWh0dHA6Ly9yMTMuYy5sZW5jci5vcmcvMjQuY3Js
+MIIBBQYKKwYBBAHWeQIEAgSB9gSB8wDxAHcAyzj3FYl8hKFEX1vB3fvJbvKaWc1H
+CmkFhbDLFMMUWOcAAAGa++ISqgAABAMASDBGAiEA3WWIas6H/oGc0iEyhSQb7c1R
+7byODELyv3vkaNILtbcCIQDvl9FPIRKLeTXhR0FYJ/1kFQVNK/ShG0ISO0bOUPwR
+KgB2ANFuqaVoB35mNaA/N6XdvAOlPEESFNSIGPXpMbMjy5UEAAABmvviE24AAAQD
+AEcwRQIhAOv5CsV5FBbmT40psjemvo2+fwRSM8HdcXuwLilnTV05AiBuyl3XYVwV
+CtOTsVqaz9H8fXtuBKMc+qsu2z+9ZLd3JjANBgkqhkiG9w0BAQsFAAOCAQEAS1xu
+UjlFgLN92zTjR/eW1pOvJUCd2ar2vaSeuS79jzk3KfKxwxCzZQighD3XQvxQj4dl
+55Ej+dt33lekJFmPTAW3YoVPkbpyUO2kJmE6RMkYFVixWi4Joiq70G9l2PuTgvrb
++CDmEdUMym+qs1zPFSdZ1Z0vTbSfVxjgHl5/RSFtHOipb+MRvYy63VLTp4fyn5sz
+KCiHwQPr+ZY11+7KP2Ery8CS3Mc7fWrKXSVbOKBo4KKB36dN132NG2P09gTElkSE
+IYGr8QQEXLOQyftYhy/fLW28iz4Rcy3WEldWAHwDG2BAWnIED6/CKetfOlUn7s28
+tr/jlxbcm8nCo+jWVA==
+-----END CERTIFICATE-----
+ 1 s:C = US, O = Let's Encrypt, CN = R12
+   i:C = US, O = Internet Security Research Group, CN = ISRG Root X1
+   a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Mar 13 00:00:00 2024 GMT; NotAfter: Mar 12 23:59:59 2027 GMT
+-----BEGIN CERTIFICATE-----
+MIIFBjCCAu6gAwIBAgIRAMISMktwqbSRcdxA9+KFJjwwDQYJKoZIhvcNAQELBQAw
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjQwMzEzMDAwMDAw
+WhcNMjcwMzEyMjM1OTU5WjAzMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNTGV0J3Mg
+RW5jcnlwdDEMMAoGA1UEAxMDUjEyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+CgKCAQEA2pgodK2+lP474B7i5Ut1qywSf+2nAzJ+Npfs6DGPpRONC5kuHs0BUT1M
+5ShuCVUxqqUiXXL0LQfCTUA83wEjuXg39RplMjTmhnGdBO+ECFu9AhqZ66YBAJpz
+kG2Pogeg0JfT2kVhgTU9FPnEwF9q3AuWGrCf4yrqvSrWmMebcas7dA8827JgvlpL
+Thjp2ypzXIlhZZ7+7Tymy05v5J75AEaz/xlNKmOzjmbGGIVwx1Blbzt05UiDDwhY
+XS0jnV6j/ujbAKHS9OMZTfLuevYnnuXNnC2i8n+cF63vEzc50bTILEHWhsDp7CH4
+WRt/uTp8n1wBnWIEwii9Cq08yhDsGwIDAQABo4H4MIH1MA4GA1UdDwEB/wQEAwIB
+hjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwEgYDVR0TAQH/BAgwBgEB
+/wIBADAdBgNVHQ4EFgQUALUp8i2ObzHom0yteD763OkM0dIwHwYDVR0jBBgwFoAU
+ebRZ5nu25eQBc4AIiMgaWPbpm24wMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzAC
+hhZodHRwOi8veDEuaS5sZW5jci5vcmcvMBMGA1UdIAQMMAowCAYGZ4EMAQIBMCcG
+A1UdHwQgMB4wHKAaoBiGFmh0dHA6Ly94MS5jLmxlbmNyLm9yZy8wDQYJKoZIhvcN
+AQELBQADggIBAI910AnPanZIZTKS3rVEyIV29BWEjAK/duuz8eL5boSoVpHhkkv3
+4eoAeEiPdZLj5EZ7G2ArIK+gzhTlRQ1q4FKGpPPaFBSpqV/xbUb5UlAXQOnkHn3m
+FVj+qYv87/WeY+Bm4sN3Ox8BhyaU7UAQ3LeZ7N1X01xxQe4wIAAE3JVLUCiHmZL+
+qoCUtgYIFPgcg350QMUIWgxPXNGEncT921ne7nluI02V8pLUmClqXOsCwULw+PVO
+ZCB7qOMxxMBoCUeL2Ll4oMpOSr5pJCpLN3tRA2s6P1KLs9TSrVhOk+7LX28NMUlI
+usQ/nxLJID0RhAeFtPjyOCOscQBA53+NRjSCak7P4A5jX7ppmkcJECL+S0i3kXVU
+y5Me5BbrU8973jZNv/ax6+ZK6TM8jWmimL6of6OrX7ZU6E2WqazzsFrLG3o2kySb
+zlhSgJ81Cl4tv3SbYiYXnJExKQvzf83DYotox3f0fwv7xln1A2ZLplCb0O+l/AK0
+YE0DS2FPxSAHi0iwMfW2nNHJrXcY3LLHD77gRgje4Eveubi2xxa+Nmk/hmhLdIET
+iVDFanoCrMVIpQ59XWHkzdFmoHXHBV7oibVjGSO7ULSQ7MJ1Nz51phuDJSgAIU7A
+0zrLnOrAj/dfrlEWRhCvAgbuwLZX1A2sjNjXoPOHbsPiy+lO1KF8/XY7
+-----END CERTIFICATE-----
+---
+Server certificate
+subject=CN = my.l-essential.com
+issuer=C = US, O = Let's Encrypt, CN = R13
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: RSA
+Server Temp Key: ECDH, prime256v1, 256 bits
+---
+SSL handshake has read 3308 bytes and written 446 bytes
+Verification error: unable to verify the first certificate
+---
+New, TLSv1.2, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+    Session-ID: C904BC2812957734FD7868BE79A14197E814B5A320BEA0DE3056DF4E5AE09007
+    Session-ID-ctx: 
+    Master-Key: 907690A310D949AD0A0F0D5413D4B624F90E23D00B60A6AE37FED6FD425D13AEBE4D40930C6C2A58A7ADD26EB6FB9146
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - b1 1d de a9 ae 2d ed 9f-5b de 06 5a bb 71 5d 40   .....-..[..Z.q]@
+    0010 - 73 37 98 78 ff 68 ef 01-a0 f2 63 0c 33 7a 74 d1   s7.x.h....c.3zt.
+    0020 - 93 46 20 86 1f 7e 46 b0-1f 12 e9 a5 1a fd 67 31   .F ..~F.......g1
+    0030 - bb 86 26 b3 6d 2d 93 6e-f8 3f fa d7 8a ba 86 89   ..&.m-.n.?......
+    0040 - b9 07 3f 1e e0 d6 4c a0-ee 5d 9c f2 f4 b2 cb 66   ..?...L..].....f
+    0050 - 1a 75 6a 80 a4 14 af 6a-93 dc 59 d1 5a 14 18 47   .uj....j..Y.Z..G
+    0060 - 7b 73 96 27 c7 a3 11 7c-7b 0d ee a6 70 2d 4a 32   {s.'...|{...p-J2
+    0070 - a4 97 6e eb 09 a4 57 5f-c1 e5 74 c9 33 16 df 07   ..n...W_..t.3...
+    0080 - 63 06 38 a7 19 76 d1 25-13 85 e3 7d 45 6d 4e 8d   c.8..v.%...}EmN.
+    0090 - 90 06 8d 0a fb 60 08 b6-08 b9 b6 68 5d af 04 cc   .....`.....h]...
+    00a0 - b7 7b 07 48 40 ca a1 31-a7 55 17 fc 63 ab 1f 7c   .{.H@..1.U..c..|
+    00b0 - e3 ec b5 2d 26 50 70 eb-6b c7 52 5b fc 8f 95 13   ...-&Pp.k.R[....
+    00c0 - 5a 5b ec de 16 dc 77 b1-2c 2a e2 25 65 c0 c7 e8   Z[....w.,*.%e...
+
+    Start Time: 1767972322
+    Timeout   : 7200 (sec)
+    Verify return code: 21 (unable to verify the first certificate)
+    Extended master secret: no
+---
+closed
