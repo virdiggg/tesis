@@ -81,8 +81,10 @@ else:
     for v in variabel_config.values():
         pernyataan_cols.extend(v['cols'])
 
+    smartpls = os.path.join(target_dir, 'to_smartpls.csv')
     df_pernyataan_only = df_final[pernyataan_cols]
-    df_pernyataan_only.to_csv(os.path.join(target_dir, 'to_smartpls.csv'), index=False)
+    df_pernyataan_only.to_csv(smartpls, index=False)
+    print("File disimpan ke:", smartpls)
 
     for col in profile_cols:
         plt.figure(figsize=(8, 6))
