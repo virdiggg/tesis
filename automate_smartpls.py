@@ -34,14 +34,57 @@ SIGNIFICANCE_LEVEL = 0.025 # One tail
 
 # =============================================================================
 # Mulai dari sini untuk proses, jangan diubah
+# def process_flc(df_raw):
+#     """Proses Fornell-Larcker: Diagonal tetap ada (k=1), nama inisial."""
+#     valid_labels = [label for label in df_raw.index if label in short_mapping]
+#     df = df_raw.loc[valid_labels, valid_labels].copy()
+#     df.index = [short_mapping[l] for l in df.index]
+#     df.columns = [short_mapping[l] for l in df.columns]
+#     mask = np.triu(np.ones(df.shape), k=1).astype(bool)
+#     return df.where(~mask, "")
 def process_flc(df_raw):
-    """Proses Fornell-Larcker: Diagonal tetap ada (k=1), nama inisial."""
-    valid_labels = [label for label in df_raw.index if label in short_mapping]
-    df = df_raw.loc[valid_labels, valid_labels].copy()
-    df.index = [short_mapping[l] for l in df.index]
-    df.columns = [short_mapping[l] for l in df.columns]
-    mask = np.triu(np.ones(df.shape), k=1).astype(bool)
-    return df.where(~mask, "")
+    """
+    Proses Fornell-Larcker: Mengembalikan 2 output.
+    1. df_short: Hanya variabel utama (BK, D, P, dsb).
+    2. df_long: Variabel utama + Moderasi (BK * D, dsb).
+    """
+
+    def transform_label(label, mode='short'):
+        if label in short_mapping:
+            return short_mapping[label]
+
+        if ">" in label and mode == 'long':
+            parts = [p.split("(")[0].strip() for p in label.split(">")]
+            final_parts = []
+            for p in parts[:2]:
+                found = False
+                for k, v in short_mapping.items():
+                    if k.startswith(p):
+                        final_parts.append(v)
+                        found = True
+                        break
+                if not found: final_parts.append(p)
+            return f"{final_parts[0]} * {final_parts[1]}"
+
+        return None
+
+    labels_short = [l for l in df_raw.index if l in short_mapping]
+    df_short = df_raw.loc[labels_short, labels_short].copy()
+    df_short.index = [transform_label(l, 'short') for l in df_short.index]
+    df_short.columns = [transform_label(l, 'short') for l in df_short.columns]
+    mask_s = np.triu(np.ones(df_short.shape), k=1).astype(bool)
+    df_short = df_short.where(~mask_s, "")
+
+    labels_long = [l for l in df_raw.index if l in short_mapping or ">" in str(l)]
+    df_long = df_raw.loc[labels_long, labels_long].copy()
+
+    new_labels_long = [transform_label(l, 'long') for l in df_long.index]
+    df_long.index = new_labels_long
+    df_long.columns = new_labels_long
+    mask_l = np.triu(np.ones(df_long.shape), k=1).astype(bool)
+    df_long = df_long.where(~mask_l, "")
+
+    return df_short, df_long
 
 def process_htmt(df_raw):
     """Proses HTMT: Diagonal dihapus (k=0), baris nama lengkap, kolom inisial."""
@@ -137,7 +180,7 @@ def process_loading_factor(df_raw):
                 break
 
     def natural_sort_key(s):
-        return [int(text) if text.isdigit() else text.lower() 
+        return [int(text) if text.isdigit() else text.lower()
                 for text in re.split('([0-9]+)', str(s))]
 
     result = result.reindex(sorted(result.index, key=natural_sort_key))
@@ -385,8 +428,10 @@ try:
     with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
 
         df_flc_raw = pd.read_excel(input_file, sheet_name='flc', index_col=0)
-        df_flc_final = process_flc(df_flc_raw)
+        # df_flc_final = process_flc(df_flc_raw)
+        df_flc_final, df_flc_long = process_flc(df_flc_raw)
         df_flc_final.to_excel(writer, sheet_name='flc', index_label="Konstruk")
+        df_flc_long.to_excel(writer, sheet_name='flc_long', index_label="Konstruk")
 
         df_htmt_raw = pd.read_excel(input_file, sheet_name='htmt', index_col=0)
         df_htmt_final = process_htmt(df_htmt_raw)
