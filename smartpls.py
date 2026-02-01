@@ -240,7 +240,7 @@ def process_bootstrapping(df_raw):
             if not src_codes:
                 continue
 
-            src = "".join(src_codes)
+            src = " → ".join(src_codes)
             jalur = f"{src} → {dst}"
 
         else:
