@@ -94,7 +94,7 @@ Pengertian masing-masing variabel, cari 5 buku untuk definisinya
 2. H2: Work-life balance berpengaruh positif terhadap Produktivitas
 3. H3: Beban Kerja berpengaruh positif terhadap Produktivitas Karyawan
 4. H4: Digitalisasi berpengaruh positif terhadap Produktivitas Karyawan
-5. H5: Digitalisasi memperkuat pengaruh positif dari Pelatihan dan Produktivitas Karyawan
+5. H5: Digitalisasi memperkuat pengaruh positif dari Pelatihan terhadap Produktivitas Karyawan
 6. H6: Digitalisasi memperkuat pengaruh positif dari Work-life Balance terhadap Produktivitas Karyawan
 7. H7: Digitalisasi memperkuat pengaruh positif dari Beban Kerja terhadap Produktivitas Karyawan
 
