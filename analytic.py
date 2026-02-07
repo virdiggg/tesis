@@ -158,6 +158,8 @@ else:
             summary_data.append(row)
 
         df_summary = pd.DataFrame(summary_data)
+        df_summary['Urutan'] = df_summary['Persentase (%)'].rank(method='min', ascending=False).astype(int)
+
         output_path = os.path.join(target_dir, f'Analisis_{var_name}{_postfix}.xlsx')
         df_summary.to_excel(output_path, index=False)
 

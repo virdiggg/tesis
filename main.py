@@ -115,6 +115,8 @@ def create_analisis(df, title=''):
             output_path = os.path.join('target', str(TOTAL_RESPONDEN))
             os.makedirs(output_path, exist_ok=True)
 
+        df_summary['Urutan'] = df_summary['Persentase (%)'].rank(method='min', ascending=False).astype(int)
+
         output_path = os.path.join(output_path, f'Analisis_{var_name}{f"_{title}" if title else ''}.xlsx')
         df_summary.to_excel(output_path, index=False)
         formatting_excel(output_path)

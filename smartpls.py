@@ -329,11 +329,10 @@ def process_r_square(df_raw):
     """
     Proses R-Square SmartPLS:
     - Ambil variabel endogen (Y)
-    - Gunakan nama dari full_mapping
+    - Tambahkan kolom Kontribusi (%) dan Faktor Lain (%)
     """
 
     df = df_raw.copy()
-
     konstruk_col = df.columns[0]
 
     endogen_keys = [
@@ -352,6 +351,14 @@ def process_r_square(df_raw):
     result = df_filtered[
         ["Variabel", "R Square", "R Square Adjusted"]
     ].reset_index(drop=True)
+
+    result["Kontribusi (%)"] = (result["R Square"] * 100).round(1).astype(str) + "%"
+
+    result["Faktor Lain (%)"] = ((1 - result["R Square"]) * 100).round(1).astype(str) + "%"
+
+    # untuk keperluan chart/grafik di Excel
+    # result["Kontribusi (%)"] = (result["R Square"] * 100).round(1)
+    # result["Faktor Lain (%)"] = (100 - result["Kontribusi (%)"]).round(1)
 
     return result
 
