@@ -114,18 +114,28 @@ else:
         if col == 'nama_perusahaan':
             continue
 
-        plt.figure(figsize=(8, 6))
+        output = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}{_postfix}.png')
+
+        plt.figure(figsize=(10, 7))
         data_counts = df_final[col].value_counts()
 
-        plt.pie(data_counts, labels=data_counts.index, autopct='%1.1f%%',
-                startangle=140, colors=plt.cm.Paired.colors)
-        plt.title(f'Distribusi Responden Berdasarkan {col.title()}')
+        new_labels = [f'{label} ({count})' for label, count in zip(data_counts.index, data_counts.values)]
+
+        plt.pie(
+            data_counts,
+            labels=new_labels,
+            autopct='%1.1f%%',
+            startangle=140,
+            colors=plt.cm.Paired.colors,
+            pctdistance=0.85
+        )
+
+        plt.title(f'Distribusi Responden Berdasarkan {col.title()}\n(Total N = {len(df_final)})', pad=20)
         plt.axis('equal')
 
-        output_file = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}{_postfix}.png')
-        plt.savefig(output_file)
+        plt.savefig(output, bbox_inches='tight')
         plt.close()
-        print("File disimpan ke:", output_file)
+        print(f"File disimpan di: {output}")
 
     total_responden = len(df_final)
     skor_ideal = total_responden * 5

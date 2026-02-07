@@ -77,18 +77,32 @@ def create_pie_chart(df, title=''):
         if title:
             output_path = os.path.join('target', title.lower())
             os.makedirs(output_path, exist_ok=True)
-            title = title.lower()
+            suffix_title = f"_{title.lower()}"
         else:
             output_path = os.path.join('target', str(TOTAL_RESPONDEN))
             os.makedirs(output_path, exist_ok=True)
+            suffix_title = ""
 
-        output = os.path.join(output_path, f'pie_chart_{col.replace(" ", "_")}{f"_{title}" if title else ''}.png')
-        plt.figure(figsize=(8, 6))
+        output = os.path.join(output_path, f'pie_chart_{col.replace(" ", "_")}{suffix_title}.png')
+
+        plt.figure(figsize=(10, 7))
         data_counts = df[col].value_counts()
-        plt.pie(data_counts, labels=data_counts.index, autopct='%1.1f%%', startangle=140, colors=plt.cm.Paired.colors)
-        plt.title(f'Distribusi Responden Berdasarkan {col.title()}')
+
+        new_labels = [f'{label} ({count})' for label, count in zip(data_counts.index, data_counts.values)]
+
+        plt.pie(
+            data_counts,
+            labels=new_labels,
+            autopct='%1.1f%%',
+            startangle=140,
+            colors=plt.cm.Paired.colors,
+            pctdistance=0.85
+        )
+
+        plt.title(f'Distribusi Responden Berdasarkan {col.title()}\n(Total N = {len(df)})', pad=20)
         plt.axis('equal')
-        plt.savefig(output)
+
+        plt.savefig(output, bbox_inches='tight')
         plt.close()
         print(f"File disimpan di: {output}")
 
