@@ -13,9 +13,9 @@ UMKM = os.path.join('data', "Data Usaha Mikro Kecil dan Menengah (UMKM) Kosmetik
 RESPONDEN_ORI = os.path.join('target', 'Hasil_Profil_Responden_Ori.xlsx')
 
 OUTPUT_RESPONDEN = os.path.join('target', 'Hasil_Profil_Responden.xlsx')
-OUTPUT_RESPONDEN_TANGSEL = os.path.join('target', 'Hasil_Profil_Responden_Tangsel.xlsx')
+OUTPUT_RESPONDEN_TANGSEL = os.path.join('target', 'tangsel', 'Hasil_Profil_Responden_Tangsel.xlsx')
 OUTPUT_PERNYATAAN = os.path.join('target', 'pernyataan.csv')
-OUTPUT_PERNYATAAN_TANGSEL = os.path.join('target', 'pernyataan_tangsel.csv')
+OUTPUT_PERNYATAAN_TANGSEL = os.path.join('target', 'tangsel', 'pernyataan_tangsel.csv')
 
 os.makedirs('source', exist_ok=True)
 os.makedirs('target', exist_ok=True)
@@ -69,12 +69,20 @@ def get_kategori(persentase):
     elif 84.01 <= persentase <= 100.00: return 'Sangat Setuju'
     return '-'
 
-def create_pie_chart(df):
+def create_pie_chart(df, title=''):
     for col in profile_cols:
         if col == 'nama_perusahaan':
             continue
 
-        output = os.path.join('target', f'pie_chart_{col.replace(" ", "_")}_tangsel.png')
+        if title:
+            output_path = os.path.join('target', title.lower())
+            os.makedirs(output_path, exist_ok=True)
+            title = title.lower()
+        else:
+            output_path = os.path.join('target', str(TOTAL_RESPONDEN))
+            os.makedirs(output_path, exist_ok=True)
+
+        output = os.path.join(output_path, f'pie_chart_{col.replace(" ", "_")}{f"_{title}" if title else ''}.png')
         plt.figure(figsize=(8, 6))
         data_counts = df[col].value_counts()
         plt.pie(data_counts, labels=data_counts.index, autopct='%1.1f%%', startangle=140, colors=plt.cm.Paired.colors)
@@ -98,7 +106,16 @@ def create_analisis(df, title=''):
                 'Kategori': get_kategori(persentase)
             })
         df_summary = pd.DataFrame(summary_data)
-        output_path = os.path.join('target', f'Analisis_{var_name}{f"_{title}" if title else ''}.xlsx')
+
+        if title:
+            output_path = os.path.join('target', title.lower())
+            os.makedirs(output_path, exist_ok=True)
+            title = title.lower()
+        else:
+            output_path = os.path.join('target', str(TOTAL_RESPONDEN))
+            os.makedirs(output_path, exist_ok=True)
+
+        output_path = os.path.join(output_path, f'Analisis_{var_name}{f"_{title}" if title else ''}.xlsx')
         df_summary.to_excel(output_path, index=False)
         formatting_excel(output_path)
 
@@ -222,7 +239,7 @@ formatting_excel(OUTPUT_RESPONDEN)
 df_csv_combined.to_csv(OUTPUT_PERNYATAAN, index=False)
 print(f'File disimpan di: {OUTPUT_PERNYATAAN}')
 
-create_pie_chart(df_tangsel_only)
+create_pie_chart(df_tangsel_only, 'Tangsel')
 create_pie_chart(df_final_all)
 create_analisis(df_tangsel_only, 'Tangsel')
 create_analisis(df_final_all)
