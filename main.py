@@ -69,7 +69,7 @@ def get_kategori(persentase):
     elif 84.01 <= persentase <= 100.00: return 'Sangat Setuju'
     return '-'
 
-def create_pie_chart(df, title):
+def create_pie_chart(df):
     for col in profile_cols:
         if col == 'nama_perusahaan':
             continue
@@ -78,7 +78,7 @@ def create_pie_chart(df, title):
         plt.figure(figsize=(8, 6))
         data_counts = df[col].value_counts()
         plt.pie(data_counts, labels=data_counts.index, autopct='%1.1f%%', startangle=140, colors=plt.cm.Paired.colors)
-        plt.title(f'Distribusi {title} Berdasarkan {col.title()}')
+        plt.title(f'Distribusi Responden Berdasarkan {col.title()}')
         plt.axis('equal')
         plt.savefig(output)
         plt.close()
@@ -222,7 +222,7 @@ formatting_excel(OUTPUT_RESPONDEN)
 df_csv_combined.to_csv(OUTPUT_PERNYATAAN, index=False)
 print(f'File disimpan di: {OUTPUT_PERNYATAAN}')
 
-create_pie_chart(df_tangsel_only, 'Responden Tangsel')
-create_pie_chart(df_final_all, 'Semua Responden')
+create_pie_chart(df_tangsel_only)
+create_pie_chart(df_final_all)
 create_analisis(df_tangsel_only, 'Tangsel')
 create_analisis(df_final_all)

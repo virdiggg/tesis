@@ -11,11 +11,8 @@ random_string = str(uuid.uuid4()).replace('-', '')
 
 # Bagian ini untuk konfigurasi, disesuaikan dengan kebutuhan
 # =============================================================================
-# File input
-input_file = os.path.join('target', 'Hasil_Profil_Responden.xlsx')
-
 # Mapping profil responden
-profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja']
+profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja', 'nama_perusahaan']
 
 # Mapping variabel
 full_mapping = {
@@ -34,6 +31,12 @@ short_mapping = {
     "D (Z)": "D",
     "PK (Y)": "PK"
 }
+
+# Prefix file output/input
+_postfix = ''
+
+# File input
+input_file = os.path.join('target', f'Hasil_Profil_Responden{_postfix}.xlsx')
 # =============================================================================
 
 # =============================================================================
@@ -83,12 +86,15 @@ else:
     for v in variabel_config.values():
         pernyataan_cols.extend(v['cols'])
 
-    smartpls = os.path.join(target_dir, f'to_smartpls_{timestamp}_{random_string}.csv')
+    smartpls = os.path.join(target_dir, f'to_smartpls_{timestamp}{_postfix}_{random_string}.csv')
     df_pernyataan_only = df_final[pernyataan_cols]
     df_pernyataan_only.to_csv(smartpls, index=False)
     print("File disimpan ke:", smartpls)
 
     for col in profile_cols:
+        if col == 'nama_perusahaan':
+            continue
+
         plt.figure(figsize=(8, 6))
         data_counts = df_final[col].value_counts()
 
@@ -97,7 +103,7 @@ else:
         plt.title(f'Distribusi Responden Berdasarkan {col.title()}')
         plt.axis('equal')
 
-        output_file = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}.png')
+        output_file = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}{_postfix}.png')
         plt.savefig(output_file)
         plt.close()
         print("File disimpan ke:", output_file)
@@ -141,7 +147,7 @@ else:
             summary_data.append(row)
 
         df_summary = pd.DataFrame(summary_data)
-        output_path = os.path.join(target_dir, f'Analisis_{var_name}.xlsx')
+        output_path = os.path.join(target_dir, f'Analisis_{var_name}{_postfix}.xlsx')
         df_summary.to_excel(output_path, index=False)
 
         formatting_excel(output_path)
