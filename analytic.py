@@ -33,53 +33,72 @@ short_mapping = {
 }
 
 # Prefix file output/input
-_postfix = ''
+_postfix = '_Tangsel'
 
 # File input
-input_file = os.path.join('target', f'Hasil_Profil_Responden{_postfix}.xlsx')
+input_file = os.path.join('target', 'tangsel', f'Hasil_Profil_Responden{_postfix}.xlsx')
+
+# Kalo ada indikator yang perlu di-skip (Biar hasil bootstrapping bisa ijo)
+skip_indicators = ['P1', 'WB2', 'WB4', 'D2', 'D4', 'D6', 'D10']
 # =============================================================================
 
 # =============================================================================
 # Mulai dari sini untuk proses, jangan diubah
-def process_mapping_auto(full_mapping, short_mapping, df):
-    """
-    Membuat variabel_config otomatis berdasarkan kolom DataFrame
-    """
-
+def process_mapping_and_rename(full_mapping, short_mapping, df, skip_list):
     variabel_config = {}
+    rename_map = {}
 
-    columns = list(df.columns)
+    cols_to_drop = [c for c in skip_list if c in df.columns]
+    df = df.drop(columns=cols_to_drop)
+
+    current_columns = list(df.columns)
 
     for key, full_name in full_mapping.items():
         short = short_mapping[key]
-
         code = key[key.find("(")+1:key.find(")")]
-
         var_name = full_name.replace(" ", "_")
 
         pattern = re.compile(rf"^{short}\d+$")
-        indikator_cols = sorted(
-            [col for col in columns if pattern.match(col)],
+
+        original_cols = sorted(
+            [col for col in current_columns if pattern.match(col)],
             key=lambda x: int(re.findall(r"\d+", x)[0])
         )
 
-        if indikator_cols:
+        new_cols = []
+        for i, old_col in enumerate(original_cols, 1):
+            new_col_name = f"{short}{i}"
+            rename_map[old_col] = new_col_name
+            new_cols.append(new_col_name)
+
+        if new_cols:
             variabel_config[var_name] = {
-                "cols": indikator_cols,
+                "cols": new_cols,
                 "code": code
             }
 
-    return variabel_config
+    df.rename(columns=rename_map, inplace=True)
+
+    return variabel_config, df
+
+def get_kategori(persentase):
+    if 20.00 <= persentase <= 36.00: return 'Sangat Tidak Setuju'
+    elif 36.01 <= persentase <= 52.00: return 'Tidak Setuju'
+    elif 52.01 <= persentase <= 68.00: return 'Netral'
+    elif 68.01 <= persentase <= 84.00: return 'Setuju'
+    elif 84.01 <= persentase <= 100.00: return 'Sangat Setuju'
+    return '-'
 
 if not os.path.exists(input_file):
     print(f"Error: File {input_file} tidak ditemukan!")
 else:
     df_final = pd.read_excel(input_file)
 
-    variabel_config = process_mapping_auto(
+    variabel_config, df_final = process_mapping_and_rename(
         full_mapping,
         short_mapping,
-        df_final
+        df_final,
+        skip_indicators
     )
 
     pernyataan_cols = []
@@ -107,14 +126,6 @@ else:
         plt.savefig(output_file)
         plt.close()
         print("File disimpan ke:", output_file)
-
-    def get_kategori(persentase):
-        if 20.00 <= persentase <= 36.00: return 'Sangat Tidak Setuju'
-        elif 36.01 <= persentase <= 52.00: return 'Tidak Setuju'
-        elif 52.01 <= persentase <= 68.00: return 'Netral'
-        elif 68.01 <= persentase <= 84.00: return 'Setuju'
-        elif 84.01 <= persentase <= 100.00: return 'Sangat Setuju'
-        return '-'
 
     total_responden = len(df_final)
     skor_ideal = total_responden * 5

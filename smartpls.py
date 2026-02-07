@@ -28,8 +28,8 @@ short_mapping = {
 }
 
 # Ketentuan level signifikan, sesuaikan one tail atau two tail
-SIGNIFICANCE_LEVEL = 0.025 # One tail
-# SIGNIFICANCE_LEVEL = 0.05 # Two tail
+# SIGNIFICANCE_LEVEL = 0.025 # Two tail
+SIGNIFICANCE_LEVEL = 0.05 # One tail
 # =============================================================================
 
 # =============================================================================
@@ -263,6 +263,68 @@ def process_bootstrapping(df_raw):
 
     return pd.DataFrame(rows)
 
+def process_hypotheses(df_boot_raw):
+    """
+    Menghasilkan tabel hipotesis secara dinamis berdasarkan full_mapping.
+    Format: H1-H4 (Langsung), H5-H7 (Moderasi/Mediasi)
+    """
+    path_col = df_boot_raw.columns[0]
+    results = []
+
+    var_x = [k for k in full_mapping.keys() if "(X" in k]
+    var_z = [k for k in full_mapping.keys() if "(Z)" in k]
+    var_y = [k for k in full_mapping.keys() if "(Y)" in k]
+
+    if not var_z or not var_y:
+        return pd.DataFrame()
+
+    z_key = var_z[0]
+    y_key = var_y[0]
+    z_short = short_mapping[z_key]
+
+    dynamic_hypo = []
+
+    for i, x_key in enumerate(var_x, 1):
+        h_code = f"H{i}"
+        label = f"{full_mapping[x_key]} berpengaruh terhadap {full_mapping[y_key]}"
+        dynamic_hypo.append((h_code, label, x_key))
+
+    next_idx = len(var_x) + 1
+    dynamic_hypo.append((f"H{next_idx}", f"{full_mapping[z_key]} berpengaruh terhadap {full_mapping[y_key]}", z_key))
+
+    start_mod = next_idx + 1
+    for i, x_key in enumerate(var_x, start_mod):
+        h_code = f"H{i}"
+        x_short = short_mapping[x_key]
+        label = f"{full_mapping[z_key]} memoderasi pengaruh {full_mapping[x_key]} terhadap {full_mapping[y_key]}"
+        search_term = f"{x_short} > {z_short}"
+        dynamic_hypo.append((h_code, label, search_term))
+
+    for code, label_display, search_term in dynamic_hypo:
+        row_data = df_boot_raw[df_boot_raw[path_col].str.contains(search_term, regex=False, na=False)]
+
+        if not row_data.empty:
+            row = row_data.iloc[0]
+            p_val = float(row['P Values'])
+
+            is_sig = p_val < SIGNIFICANCE_LEVEL
+            keterangan = f"P-Value {'<' if is_sig else '>'} {SIGNIFICANCE_LEVEL}"
+
+            if "memoderasi" in label_display:
+                kesimpulan = "Moderasi Berpengaruh" if is_sig else "Moderasi tidak berpengaruh"
+            else:
+                kesimpulan = "Hipotesis Diterima" if is_sig else "Hipotesis Ditolak"
+
+            results.append({
+                "No": code,
+                "Pengembangan Hipotesis": label_display,
+                "P-value": round(p_val, 3),
+                "Keterangan": keterangan,
+                "Kesimpulan": kesimpulan
+            })
+
+    return pd.DataFrame(results)
+
 def process_r_square(df_raw):
     """
     Proses R-Square SmartPLS:
@@ -451,6 +513,9 @@ try:
         df_boot_raw = pd.read_excel(input_file, sheet_name='bootstrapping')
         df_boot_final = process_bootstrapping(df_boot_raw)
         df_boot_final.to_excel(writer, sheet_name='bootstrapping', index=False)
+
+        df_mod_final = process_hypotheses(df_boot_raw)
+        df_mod_final.to_excel(writer, sheet_name='hypotheses', index=False)
 
         df_r_square_raw = pd.read_excel(input_file, sheet_name='r square')
         df_r_square_final = process_r_square(df_r_square_raw)
