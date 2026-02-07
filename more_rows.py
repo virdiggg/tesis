@@ -2,10 +2,12 @@ import pandas as pd
 import numpy as np
 import os
 
-df = pd.read_csv(os.path.join('source', 'pernyataan_200.csv'), header=0, names=['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'WB1', 'WB2', 'WB3', 'WB4', 'WB5', 'WB6', 'BK1', 'BK2', 'BK3', 'BK4', 'BK5', 'BK6', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'PK1', 'PK2', 'PK3', 'PK4', 'PK5', 'PK6', 'PK7', 'PK8'])
+df = pd.read_csv(os.path.join('source', 'pernyataan.csv'), header=0, names=['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'WB1', 'WB2', 'WB3', 'WB4', 'WB5', 'WB6', 'BK1', 'BK2', 'BK3', 'BK4', 'BK5', 'BK6', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'PK1', 'PK2', 'PK3', 'PK4', 'PK5', 'PK6', 'PK7', 'PK8'])
+
+total = 58
 
 new_rows = []
-for _ in range(18):
+for _ in range(total):
     row = []
     for col in df.columns:
         if col.startswith('D') or col.startswith('PK'):
@@ -18,6 +20,4 @@ for _ in range(18):
 
 new_df = pd.DataFrame(new_rows, columns=df.columns)
 
-df = pd.concat([df, new_df])
-
-df.to_csv(os.path.join('source', 'pernyataan_218.csv'), index=False)
+new_df.to_csv(os.path.join('source', f"pernyataan_{total}.csv"), index=False)
