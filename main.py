@@ -93,7 +93,7 @@ def create_pie_chart(df, title=''):
         plt.pie(
             data_counts,
             labels=new_labels,
-            autopct='%1.1f%%',
+            autopct='%1.2f%%',
             startangle=140,
             colors=plt.cm.Paired.colors,
             pctdistance=0.85
@@ -134,6 +134,44 @@ def create_analisis(df, title=''):
         output_path = os.path.join(output_path, f'Analisis_{var_name}{f"_{title}" if title else ''}.xlsx')
         df_summary.to_excel(output_path, index=False)
         formatting_excel(output_path)
+
+def create_table_karakteristik(df, title=''):
+    """
+    Membuat tabel ringkasan karakteristik responden dengan format:
+    Nama Karakteristik sejajar dengan Kategori pertama.
+    """
+    summary_list = []
+    total_n = len(df)
+    cols_to_analyze = ['jenis kelamin', 'usia', 'pendidikan terakhir', 'pengalaman kerja']
+
+    for col in cols_to_analyze:
+        counts = df[col].value_counts()
+
+        # Urutkan kategori jika perlu (opsional)
+        # counts = counts.sort_index()
+
+        for i, (kategori, jumlah) in enumerate(counts.items()):
+            persentase = (jumlah / total_n) * 100
+
+            summary_list.append({
+                'Karakteristik': col.title() if i == 0 else '',
+                'Kategori': kategori,
+                'Jumlah Responden': jumlah,
+                'Persentase (%)': f"{format(persentase, '.2f')}%"
+            })
+
+    df_summary = pd.DataFrame(summary_list)
+
+    folder_name = title.lower() if title else str(TOTAL_RESPONDEN)
+    output_dir = os.path.join('target', folder_name)
+    os.makedirs(output_dir, exist_ok=True)
+
+    file_name = f'Tabel_Karakteristik_{folder_name}.xlsx'
+    output_path = os.path.join(output_dir, file_name)
+
+    df_summary.to_excel(output_path, index=False)
+
+    formatting_excel(output_path)
 
 def get_data_from_db():
     df_ori = pd.read_excel(RESPONDEN_ORI)
@@ -259,3 +297,5 @@ create_pie_chart(df_tangsel_only, 'Tangsel')
 create_pie_chart(df_final_all)
 create_analisis(df_tangsel_only, 'Tangsel')
 create_analisis(df_final_all)
+create_table_karakteristik(df_tangsel_only, 'Tangsel')
+create_table_karakteristik(df_final_all)

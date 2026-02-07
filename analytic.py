@@ -13,6 +13,7 @@ random_string = str(uuid.uuid4()).replace('-', '')
 # =============================================================================
 # Mapping profil responden
 profile_cols = ['usia', 'jenis kelamin', 'pendidikan terakhir', 'pengalaman kerja', 'nama_perusahaan']
+exception_profile_cols = ['nama_perusahaan']
 
 # Mapping variabel
 full_mapping = {
@@ -89,55 +90,50 @@ def get_kategori(persentase):
     elif 84.01 <= persentase <= 100.00: return 'Sangat Setuju'
     return '-'
 
-if not os.path.exists(input_file):
-    print(f"Error: File {input_file} tidak ditemukan!")
-else:
-    df_final = pd.read_excel(input_file)
+def total_responden(df):
+    return len(df)
 
-    variabel_config, df_final = process_mapping_and_rename(
-        full_mapping,
-        short_mapping,
-        df_final,
-        skip_indicators
-    )
-
-    pernyataan_cols = []
-    for v in variabel_config.values():
-        pernyataan_cols.extend(v['cols'])
-
+def to_smartpls(pernyataan_cols, df):
     smartpls = os.path.join(target_dir, f'to_smartpls_{timestamp}{_postfix}_{random_string}.csv')
-    df_pernyataan_only = df_final[pernyataan_cols]
+    df_pernyataan_only = df[pernyataan_cols]
     df_pernyataan_only.to_csv(smartpls, index=False)
     print("File disimpan ke:", smartpls)
 
+def create_table_karakteristik(df, total_responden):
+    """
+    Membuat tabel ringkasan karakteristik responden (Profil Responden)
+    """
+    summary_list = []
+    total_responden = len(df)
+    exception_profile_cols
+
     for col in profile_cols:
-        if col == 'nama_perusahaan':
+        if col in exception_profile_cols:
             continue
 
-        output = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}{_postfix}.png')
+        counts = df[col].value_counts()
 
-        plt.figure(figsize=(10, 7))
-        data_counts = df_final[col].value_counts()
+        # Urutkan kategori jika perlu (opsional)
+        # counts = counts.sort_index()
 
-        new_labels = [f'{label} ({count})' for label, count in zip(data_counts.index, data_counts.values)]
+        for i, (kategori, jumlah) in enumerate(counts.items()):
+            persentase = (jumlah / total_responden) * 100
 
-        plt.pie(
-            data_counts,
-            labels=new_labels,
-            autopct='%1.1f%%',
-            startangle=140,
-            colors=plt.cm.Paired.colors,
-            pctdistance=0.85
-        )
+            summary_list.append({
+                'Karakteristik': col.title() if i == 0 else '',
+                'Kategori': kategori,
+                'Jumlah Responden': jumlah,
+                'Persentase (%)': f"{format(persentase, '.2f')}%"
+            })
 
-        plt.title(f'Distribusi Responden Berdasarkan {col.title()}\n(Total N = {len(df_final)})', pad=20)
-        plt.axis('equal')
+    df_summary = pd.DataFrame(summary_list)
 
-        plt.savefig(output, bbox_inches='tight')
-        plt.close()
-        print(f"File disimpan di: {output}")
+    output_path = os.path.join(target_dir, f'Tabel_Karakteristik{_postfix}.xlsx')
 
-    total_responden = len(df_final)
+    df_summary.to_excel(output_path, index=False)
+    formatting_excel(output_path)
+
+def create_analisis(df, variabel_config, total_responden):
     skor_ideal = total_responden * 5
 
     for var_name, config in variabel_config.items():
@@ -146,7 +142,7 @@ else:
         var_code = config['code']
 
         for idx, col in enumerate(columns, 1):
-            counts = df_final[col].value_counts().reindex([1, 2, 3, 4, 5], fill_value=0)
+            counts = df[col].value_counts().reindex([1, 2, 3, 4, 5], fill_value=0)
 
             skor_aktual = sum(counts[i] * i for i in range(1, 6))
             persentase = (skor_aktual / skor_ideal) * 100
@@ -174,3 +170,61 @@ else:
         df_summary.to_excel(output_path, index=False)
 
         formatting_excel(output_path)
+
+def create_pie_chart(df):
+    for col in profile_cols:
+        if col == 'nama_perusahaan':
+            continue
+
+        output = os.path.join(target_dir, f'pie_chart_{col.replace(" ", "_")}{_postfix}.png')
+
+        plt.figure(figsize=(10, 7))
+        data_counts = df[col].value_counts()
+
+        new_labels = [f'{label} ({count})' for label, count in zip(data_counts.index, data_counts.values)]
+
+        plt.pie(
+            data_counts,
+            labels=new_labels,
+            autopct='%1.2f%%',
+            startangle=140,
+            colors=plt.cm.Paired.colors,
+            pctdistance=0.85
+        )
+
+        plt.title(f'Distribusi Responden Berdasarkan {col.title()}\n(Total N = {len(df)})', pad=20)
+        plt.axis('equal')
+
+        plt.savefig(output, bbox_inches='tight')
+        plt.close()
+        print(f"File disimpan di: {output}")
+
+def main():
+    df_final = pd.read_excel(input_file)
+
+    variabel_config, df_final = process_mapping_and_rename(
+        full_mapping,
+        short_mapping,
+        df_final,
+        skip_indicators
+    )
+
+    pernyataan_cols = []
+    for v in variabel_config.values():
+        pernyataan_cols.extend(v['cols'])
+
+    to_smartpls(pernyataan_cols, df_final)
+
+    total = total_responden(df_final)
+    create_pie_chart(df_final)
+
+    create_analisis(df_final, variabel_config, total)
+
+    create_table_karakteristik(df_final, total)
+
+if not os.path.exists(input_file):
+    print(f"Error: File {input_file} tidak ditemukan!")
+    import sys
+    sys.exit(0)
+
+main()
